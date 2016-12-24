@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>JS轮播</title>
+<link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+	<div class="g-doc">
+	    <div class="g-hd">
+	    </div>
+	    <div class="g-bd">
+	        <div class="g-mn">
+	            <div class="m-slides">
+	                <div class="imgwrap f-cb" id="imgwrap">
+	                    <div class="banner banner-0" data-index="0"></div>
+	                    <div class="banner banner-1" data-index="1"></div>
+	                    <div class="banner banner-2" data-index="2"></div>
+	                    <div class="banner banner-3" data-index="3"></div>
+	                    <div class="banner banner-4" data-index="4"></div>
+	                    <div class="banner banner-5" data-index="5"></div>
+	                </div>
+	            </div>
+	            <div class="m-nav">
+	                <div class="navswrap f-cb" id="navswrap">
+	                    <div class="navwrap navwrap-0" data-index="0">
+	                        <div class="nav"></div>
+	                        <div class="prcsswrap">
+	                            <div class="prcss"></div>
+	                        </div>
+	                    </div>
+	                    <div class="navwrap navwrap-1" data-index="1">
+	                        <div class="nav"></div>
+	                        <div class="prcsswrap">
+	                            <div class="prcss"></div>
+	                        </div>
+	                    </div>
+	                    <div class="navwrap navwrap-2" data-index="2">
+	                        <div class="nav"></div>
+	                        <div class="prcsswrap">
+	                            <div class="prcss"></div>
+	                        </div>
+	                    </div>
+	                    <div class="navwrap navwrap-3" data-index="3">
+	                        <div class="nav"></div>
+	                        <div class="prcsswrap">
+	                            <div class="prcss"></div>
+	                        </div>
+	                    </div>
+	                    <div class="navwrap navwrap-4" data-index="4">
+	                        <div class="nav nav-4"></div>
+	                        <div class="prcsswrap">
+	                            <div class="prcss"></div>
+	                        </div>
+	                    </div>
+	                    <div class="navwrap navwrap-5" data-index="5">
+	                        <div class="nav"></div>
+	                        <div class="prcsswrap">
+	                            <div class="prcss"></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<script type="text/javascript">
+		(function(){
+			var NUMBER = 6;//图片数
+			var CURRENT = 0;//当前图的索引
+			var PREV = CURRENT//上一张图的索引,一开始是其本身
+			var NEXT = CURRENT+1;//下一张图的索引
+			var SPEED = 50;//图片切换的移动量
+			var WAIT = 5000;//等待时间
+			var INTERVAL = 50;//切换过程的时间
+
+			var $ = function(id){
+				return document.getElementById(id);
+			}
+			var getNumber = function(styleStr){//获得的样式字符串转化为数字
+				if(styleStr){
+					return parseInt(styleStr.split('px')[0]);
+				}else{
+					return 0;
+				}
+			}
+
+			//进度条的加载函数
+			function navMove(processDom,wait,interval,callback){
+
+				var processWidth = processDom.clientWidth;//进度条父元素的宽度,获得的是数值
+				var p = processDom.getElementsByClassName('prcss')[0];//获得进度条
+				//注意这里：获得等待时间内的每次间隔所移动的距离
+				var count = wait/interval;//移动多少次
+				var stepLength = Math.floor(processWidth/count);//每次移动多少
+
+				var now = CURRENT;//与点击事件有关
+				var step = function(){
+					if(now != CURRENT){//点击其他选项后值不相等，重置(Bug:点击同一选项会加快进度条)
+						clearInterval(movingNav);
+						p.style.width = 0 + 'px';
+						return;
+					}
+					var pWidth = getNumber(p.style.width);//获得的是字符串，需要转换
+					if(pWidth < processWidth){ 
+						pWidth += stepLength;
+						p.style.width = pWidth + 'px';
+					}else if(pWidth > processWidth){
+						p.style.width = processWidth + 'px';
+					}else{
+						clearInterval(movingNav);
+						//载入完归零
+						p.style.width = 0 + 'px';
+						//变更图片索引,用于图片位移函数
+						PREV = CURRENT;
+						CURRENT = NEXT;
+						NEXT++;
+						NEXT = NEXT%NUMBER;
+
+						if(callback) callback();
+					}	
+				}
+				var movingNav = setInterval(step,interval);
+			}
+			//图片的位移函数
+			function imgMove(imgwrap,from,to,callback){
+				clearInterval(movingImg);//点击时数据更新，可以不关闭定时器（但移动速度会加快）
+				var distance = Math.abs(to - from);//相差距离
+				var symbol = (to - from) / distance;//表示正负（移动方向）
+				var stepLength = Math.floor(distance/SPEED);//每次移动多少
+				var length = 0;//总距离
+				var step = function(){
+					if(length < distance){
+						length += stepLength;
+						imgwrap.style.left = getNumber(imgwrap.style.left)+stepLength*symbol+'px';
+					}else{
+						imgwrap.style.left = to + 'px';
+						clearInterval(movingImg);
+						if(callback) callback();
+					}
+				}
+				var movingImg = setInterval(step,5);
+			}
+
+			window.onload = function(){
+				var imgwrap = $('imgwrap');//获得图片容器
+				var navwrap = $('navswrap');
+				var navs = navswrap.children;//获得所有导航
+
+				//获得两图之间距离并调用图片位移函数
+				var slide = function(callback){
+					var moveOffset = -1224;
+					var from = PREV*moveOffset;//从之前那张图的位置移动到当前图的位置
+					var to = CURRENT*moveOffset;
+					imgMove(imgwrap,from,to,callback);
+				}
+
+				//切换函数
+				var go = function(wait,interval,speed){
+					var currentNav = navs[CURRENT];
+					var processDom = currentNav.getElementsByClassName('prcsswrap')[0];
+					//先执行进度条函数，后执行图片位移函数，最后进行回调
+					navMove(processDom,wait,interval,function(){
+						slide(function(){
+							go(wait,interval,speed);
+						})
+					});
+				}
+
+				//点击事件
+				$('navswrap').addEventListener('click', function(event){
+					var target = (function(){
+						if(event.target.parentNode.dataset.index){
+							return event.target.parentNode;
+						}
+					})();
+					if(target){
+						var index = parseInt(target.dataset.index);
+						PREV = CURRENT;
+						CURRENT = index;
+						NEXT = (CURRENT+1)%6;//注意NEXT的值
+						var moveOffset = -1224;
+						var from = PREV*moveOffset;//从之前那张图的位置移动到当前图的位置
+						var to = CURRENT*moveOffset
+						//先移动图片，后重新进行切换
+						slide(function(){
+							go(WAIT,INTERVAL,SPEED);
+						});
+					}
+				},false);
+
+				//开始
+				go(WAIT,INTERVAL,SPEED);
+			}
+
+		})()
+	</script>
+</body>
+</html>

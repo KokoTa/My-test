@@ -1,0 +1,196 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+</head>
+<body>
+
+<ul id="test">
+<li>JavaScript</li>
+<li>HTML</li>
+</ul> 
+ 
+<script type="text/javascript">
+var o = {};
+Object.defineProperty(o,'x',{value:1});
+var obj = Object.create(o);
+Object.defineProperty(obj,'x',{configurable:true,writable:false,value:100});
+obj.x = 500;
+console.log(obj.x);
+
+
+
+
+
+var a = {
+	x:1,
+	y:2,
+	};
+a.toString = function(){
+	return this.x+this.y;
+}
+console.log(a.toString());
+
+
+
+
+var arr = [1,2,3,4,5,6];
+arr.sort(function(a,b){
+	return a-b;
+})
+	console.log(arr.splice(2,2,'keke','haha'));
+console.log(arr);
+	arr.splice(2,2);
+console.log(arr);
+	console.log(arr.concat(0,0,0));
+	console.log(arr.slice(-2,-1));
+console.log(arr);
+	arr.forEach(function(x,index,a){
+		console.log(x,index,a);
+	})
+console.log(arr);
+	console.log(arr.filter(function(x,index){
+		return index%3===0;
+	}));
+console.log(arr);
+	console.log(arr.every(function(x){
+		return x>5;
+	}));
+	console.log(arr.every(function(x){
+		return x>0;
+	}))
+console.log(arr);
+var sum = arr.reduce(function(x,y){
+	return x+y;
+},0);
+	console.log(sum);
+console.log(arr);
+	console.log(arr.indexOf(5));
+	console.log(arr.indexOf(5,1));
+	console.log(arr.indexOf(5,2));
+	console.log(arr.indexOf(5,3));
+	console.log(arr.indexOf(5,-1));
+console.log(arr);
+	console.log(arr instanceof Array);
+	console.log(Array.isArray(arr));
+	console.log(({}).toString.apply(arr));//({})=Object.prototype
+	console.log(arr.constructor);
+console.log(arr);
+	console.log(1 in arr);
+/*
+一个完整语句，以function开头，例如：
+
+// 这是函数声明
+function foo() {
+}
+
+而用括号括起来的，或者前面有一元操作符的，都是函数表达式，例如：
+
+// 函数表达式
+(function foo() {
+})
+
+// 函数表达式
+!function foo() {
+}
+
+// 函数表达式
++function foo() {
+}
+*/
+
+-function(){console.log('Hello -')} ();
+
++function(){console.log('Hello +')} ();
+
+delete function(){console.log('Hello delete')}  ();
+
+typeof function(){console.log('Hello typeof')}  ();
+
+1%function(){console.log('Hello %')} ();
+	
+
+
+function f1(){
+	return this;
+}
+console.log(f1());
+
+function bar(){
+	console.log(Object.prototype.toString.call(this));
+}
+bar(1);
+bar.call(1);
+
+function foo(x,y,z){
+	arguments[0] = 100;
+	arguments[1] = 200;
+	arguments[2] = 300;//可定义，但未与z绑定
+	console.log(arguments);
+	console.log(arguments.length);
+	console.log(arguments[2]);
+	console.log(x);
+	console.log(y);
+	console.log(z);
+	console.log(arguments.callee==foo);
+}
+foo(1,2);
+console.log(foo.length);
+
+
+
+
+function foo2(x,y){
+	console.log(this,x,y);
+}
+foo2.call(1,2,3);
+foo2.call(true,2,3);
+foo2.call(undefined,2,3);
+foo2.apply(1,[2,3]);
+foo2.apply(true,[2,3]);
+foo2.apply(undefined,[2,3]);
+
+
+
+
+var foo3 = {
+	x:1,
+	getX:function(){return this.x;}
+}
+console.log(foo3.getX());
+var getX = foo3.getX;//this产生了变化
+this.x=2;
+console.log(getX());
+var bindX = getX.bind(foo3);
+console.log(bindX());//绑定this
+
+
+function foo4(x,y,z){
+	console.log(x+y+z);
+}
+var foo4_1 = foo4.bind(undefined,1);//undefined指向window，绑定a
+foo4_1(2,3);
+var foo4_2 = foo4_1.bind(undefined,2);//在绑定a的基础上再绑定b
+foo4_2(3);
+
+
+
+
+function foo5(){
+	this.b = 100;
+	this.c = 200;
+	return this.a;
+}
+var foo5_1 = foo5.bind({a:1});
+console.log(foo5_1());//return 只返回this.a
+console.log(new foo5_1());//new字符会无视bind,并返回foo5对象
+
+
+function foo6(){
+	console.log(this);
+}
+foo6.call('keke');
+</script> 
+
+</body>
+</html>

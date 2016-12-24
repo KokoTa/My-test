@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		canvas{
+			display: block;
+			border: 1px solid black;
+			margin: 50px auto;
+		}
+		/*画布的大小用HTML或者JS的方法实现，且没有单位*/
+	</style>
+</head>
+<body>
+	<canvas id="draw" height="768" width="1024">
+		若您看到这些文字，说明您所用的浏览器不支持canvas，请更换其他浏览器尝试。
+	</canvas>
+</body>
+<script type="text/javascript">
+window.onload = function(){
+	var draw = document.getElementById('draw');
+	if(draw.getContext){
+		var context = draw.getContext('2d');
+		context.beginPath();//由于canvas是基于状态绘制的,不加前后缀begin和close的话，stroke会重复把前面的图像再画一遍，把路径包起来再绘图
+		context.lineWidth = 30;
+		context.lineCap = "round";
+		context.moveTo(0, 0);//确定起点
+		context.lineTo(400,400);//确定划到哪
+		//context.closePath();//让没有首尾相连的线段相连，只对stroke有效,并且会使lineCap无效
+		context.stroke();//调用画图函数
+		
+
+		context.fillStyle = "red";//填充颜色
+		context.fillRect(200,200,50,50);//x,y,长，宽
+		context.clearRect(200,200,10,10);//清除
+
+		context.fillStyle = "rgba(0,255,0,0.5)";
+		context.fillRect(100,100,50,50);
+		
+		context.strokeStyle = "green";//线条颜色
+		context.lineWidth = 10;//线粗
+		context.lineJoin = "round";//线连接方式
+		context.strokeRect(300,300,50,50);
+
+		context.beginPath();
+		context.strokeStyle = "yellow";
+		context.arc(100,100,99,0,2*Math.PI,false);
+		context.closePath();
+		context.stroke();
+
+
+
+
+	}
+
+};
+	
+</script>
+</html>

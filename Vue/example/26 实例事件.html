@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>实例事件</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/index.css">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+
+</head>
+<body>
+	<h1>实例事件</h1>
+	<hr>
+
+	<div id="app">
+		{{n}}
+		<p><button @click="add">+</button></p>
+	</div>
+	<button onclick="on()">on</button>
+	<button onclick="add()">-</button>
+	<button onclick="off()">delete</button>
+
+	<script type="text/javascript">
+		//实例调用，即外部调用
+		var app = new Vue({
+			el:'#app',
+			data:{
+				n:1
+			},
+			methods:{//内部方法
+				add:function(){
+					this.n++;
+				}
+			}
+		});
+
+		function on(){
+			app.$on('minus',function(num){//外部方法，$on添加事件，$once添加且只会执行一次
+				console.log('Going');
+				this.n -= num;
+			});
+		}
+
+		function add(){
+			app.$emit('minus', 2);//$emit触发事件
+		}
+
+		function off(){
+			app.$off('minus');//$off解除事件
+		}
+	</script>
+</body>
+</html>

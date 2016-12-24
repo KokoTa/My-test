@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>extend</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/index.css">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+
+</head>
+<body>
+	<h1>extend</h1>
+	<hr>
+
+	<div id="app">
+		{{message}}
+	</div>
+
+	<script type="text/javascript">
+		var mix = {
+			created:function(){//除了生命周期，其余都会被构造器的覆盖
+				console.log('外部混入');
+			}
+		}
+		var extend = {
+			created:function(){//同mixin
+				console.log('外部扩展');
+			}
+		}
+		var app = new Vue({
+			el:'#app',
+			data:{
+				message:"Hello Vue"
+			},
+			methods:{
+				add:function(){
+					console.log("内部方法");
+				}
+			},
+			created:function(){
+				console.log('内部输出');
+			},
+			mixins:[mix],
+			extends:extend//只能扩展一次，优先权大于mixin
+
+		});
+	</script>
+</body>
+</html>

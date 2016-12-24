@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>级联选择器</title>
+	<style type="text/css">
+		select{
+			width: 200px;
+		}
+	</style>
+</head>
+<body>
+<form>
+	<select id="log">
+		<option value="0">请选择目录</option>
+	</select>
+	<select id="chat">
+		<option value="0">请选择章节</option>
+	</select>
+</form>
+<script type="text/javascript">
+	var L = [
+		{text:'1. DOM基础',value:'1'}, 
+        {text:'2. 事件模型',value:'2'} 
+	];
+	var C = {
+		'1':[
+			{text:'1.1 文档树',value:'1.1'}, 
+            {text:'1.2 节点操作',value:'1.2'}, 
+            {text:'1.3 元素遍历',value:'1.3'}, 
+            {text:'1.4 样式操作',value:'1.4'}, 
+            {text:'1.5 属性操作',value:'1.5'}, 
+            {text:'1.6 表单操作',value:'1.6'} 
+		],
+		'2':[
+			{text:'2.1 事件类型',value:'2.1'}, 
+            {text:'2.2 事件模型',value:'2.2'}, 
+            {text:'2.3 事件应用',value:'2.3'} 
+		]
+	}
+
+	function fillSelect(select,golist){//先清除，后添加
+		for(var i=select.length-1;i>0;i--){//select.length为选项长度
+			select.remove(i);
+		}
+		golist.forEach(function(data){
+			var option = new Option(data.text,data.value);
+			select.add(option);
+		})
+	}
+
+	var log = document.getElementById('log');//目录
+	var chat = document.getElementById('chat');//章节
+
+	fillSelect(log,L);
+
+	function X(){
+		log.addEventListener('change', function(event){
+			var value = event.target.value;
+			var list = C[value]||[];
+			fillSelect(chat,list);
+		})
+	}
+	X();
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>v-text v-html</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/index.css">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+
+</head>
+<body>
+	<h1>v-text v-html</h1>
+	<hr>
+
+	<div id="app">
+		<span>{{message}}</span> === <span v-text="message"></span>
+		<hr>
+		<span>{{newH1}}</span>   === <span v-text="newH1"></span>
+		<hr>
+		<span v-html="newH1"></span>
+	</div>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el:'#app',
+			data:{
+				message:'Hello Vue',
+				newH1:'<h1>YoooHooo!</h1>'
+			}
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Component-4</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/index.css">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+
+</head>
+<body>
+	<h1>Component-4</h1>
+	<hr>
+
+	<div id="app">
+		<component v-bind:is="who"></component>
+	</div>
+
+	<script type="text/javascript">
+		//动态改变模板
+		var pA = {
+			template:'<p>AAA</p>'
+		}
+		var pB = {
+			template:'<p>BBB is {{value}}</p>',
+			data:function(){
+				return{
+					value:2
+				}
+			}
+		}
+		var pC = {
+			template:'<p>CCC</p>'
+		}
+		var pD = {
+			template:'<p>DDD</p>'
+		}
+
+		var app = new Vue({
+			el:'#app',
+			data:{
+				who:'choiceB'
+			},
+			components:{//加载所有模板,选择性的显示某个模板
+				'choiceA':pA,
+				'choiceB':pB,
+				'choiceC':pC,
+				'choiceD':pD
+			}
+		});
+	</script>
+</body>
+</html>

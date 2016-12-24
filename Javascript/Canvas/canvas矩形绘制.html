@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas矩形绘制</title>
+	<style type="text/css">
+		canvas{
+			border: 1px solid black;
+			display: block;
+			margin: 0 auto;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="draw">
+		If you see the page,you could support the canvas
+	</canvas>
+</body>
+<script type="text/javascript">
+	var draw = document.getElementById('draw');
+	draw.width = 800;
+	draw.height = 800;
+	var context = draw.getContext('2d');
+
+	context.lineWidth = 10;
+	context.fillStyle = "red";
+	context.strokeStyle = "yellow";
+
+	context.fillRect(10,10,400,400);//用这种绘图方式可以不用begin+close来规划路径
+	context.strokeRect(10,10,400,400);
+
+	context.lineWidth = 10;
+	context.fillStyle = "rgba(0,255,0,0.5)";
+	context.strokeStyle = "blue";
+
+	context.fillRect(210,210,400,400);
+	context.strokeRect(210,210,400,400);
+</script>
+
+</html>

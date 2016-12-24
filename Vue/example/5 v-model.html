@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>v-model</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/index.css">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+
+</head>
+<body>
+	<h1>v-model</h1>
+	<hr>
+
+	<div id="app">
+		<p>原始文本：{{message}}</p>
+		<h3>文本框</h3>
+		<p>v-model:<input type="text" v-model="message" name="message"></p>
+		<p>v-model.lazy:<input type="text" v-model.lazy="message" name="message"></p>
+		<p>v-model.number:<input type="text" v-model.number="message" name="message"></p>
+		<p>v-model.trim:<input type="text" v-model.trim="message" name="message"></p>
+		<hr>
+
+		<h3>文本区域</h3>
+		<textarea v-model="message"></textarea>
+		<hr>
+
+		<h3>复选框绑定一个数组</h3>
+		<p>
+			<input type="checkbox" name="box" id="box" v-model="checkBoxValue" value="A">
+			<label for="box">A</label>
+			<input type="checkbox" name="box" id="box" v-model="checkBoxValue" value="B">
+			<label for="box">B</label>
+			<input type="checkbox" name="box" id="box" v-model="checkBoxValue" value="C">
+			<label for="box">C</label>
+			<span>{{checkBoxValue}}</span>
+		</p>
+		<hr>
+
+		<h3>单选按钮</h3>
+		<p>
+			<input type="radio" value="A" id="r1" v-model="radioValue">
+			<label for="r1">A</label>
+			<input type="radio" value="B" id="r2" v-model="radioValue">
+			<label for="r2">B</label>
+			<input type="radio" value="C" id="r3" v-model="radioValue">
+			<label for="r3">C</label>
+			<span>{{radioValue}}</span>
+		</p>
+		<hr>
+
+		<h3>选择列表</h3>
+		<p>
+			<select v-model="selected">
+				<option>A</option>
+				<option>B</option>
+				<option>C</option>
+			</select>
+			<span>{{selected}}</span>
+			<br><br>
+			<select v-model="selectedMultiple" multiple>
+				<option v-for="i in vForTest">{{i}}</option>
+			</select>
+			<span>{{selectedMultiple}}</span>
+		</p>
+	</div>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el:'#app',
+			data:{
+				message:"Hello Vue",
+				flag:true,
+				checkBoxValue:[],
+				radioValue:'',
+				selected:'',
+				selectedMultiple:[],
+				vForTest:["A","B","C"]
+			}
+		});
+	</script>
+</body>
+</html>

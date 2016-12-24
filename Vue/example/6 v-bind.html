@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>v-bind</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/index.css">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+
+</head>
+<body>
+	<h1>v-bind</h1>
+	<hr>
+
+	<div id="app">
+		<img v-bind:src="url" :width="width">
+		<hr>
+
+		<div :class="classA">1.绑定class</div>
+		<div :class="{A:flag}">2.绑定class中的判断</div>
+		<div :class="[cA,cB]">3.绑定class中的数组</div>
+		<div :class="[flag?cA:cB]">4.绑定class中的三元表达式</div>
+		<div :class="[{A:flag},cB]">5.绑定class中的判断组合</div>
+		<hr>
+
+		<div :style="{color:color,fontSize:size}">6.style绑定</div>
+		<div :style="jsonStyle">7.style绑定json语句</div>
+	</div>
+
+	<style type="text/css">
+		.A{
+			color: orange;
+		}
+		.B{
+			font-size: 2em;
+		}
+	</style>
+	<script type="text/javascript">
+		var app = new Vue({
+			el:'#app',
+			data:{
+				url:'http://cn.vuejs.org/images/logo.png',
+				width:'50',
+				classA:'A',
+				flag:true,
+				cA:'A',
+				cB:'B',
+				color:'red',
+				size:'2em',
+				jsonStyle:{
+					color:'red',
+					fontSize:'3em'
+				}
+
+			}
+		});
+	</script>
+</body>
+</html>

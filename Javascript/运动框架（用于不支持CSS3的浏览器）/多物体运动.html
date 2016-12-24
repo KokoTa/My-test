@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+<script type="text/javascript">
+	window.onload=function(){
+		var div = document.getElementsByTagName('div');
+		for(i=0;i<div.length;i++){//遍历每个div
+			div[i].timer = null;//给每个div设置一个定时器属性，即给每个div设置一个定时器（重点）
+			div[i].onmouseover=function(){//给每个div设置鼠标移入事件
+				move(this,400);//注意this，所指的对象为div[i]
+			}
+			div[i].onmouseout=function(){//给每个div设置鼠标移出事件
+				move(this,100);
+			}
+
+		}
+		var timer =null
+		function move(obj,target){//obj是div，target是目标位置
+			clearInterval(obj.timer);//先关闭定时器以免引起bug
+			obj.timer = setInterval(function(){//设置每个div的定时器
+				var speed = (target- obj.offsetWidth)/4;
+				speed=speed>0?Math.ceil(speed):Math.floor(speed);
+				if(obj.offsetWidth==target){
+					clearInterval(obj.timer);
+				}else{
+					obj.style.width = obj.offsetWidth+speed+'px';
+				}
+			},30)
+		}
+	}
+</script>
+<style type="text/css">
+	div{height: 120px;width: 100px;background: red;margin: 10px;}
+</style>
+</head>
+<body>
+<div></div>
+<div></div>
+<div></div>
+</body>
+</html>

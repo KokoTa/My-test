@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Template</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/index.css">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+
+</head>
+<body>
+	<h1>Template</h1>
+	<hr>
+
+	<div id="app">
+		<!-- 模板写法一 -->
+		<!-- <h1 style="color:red">我是简单粗暴模板标签</h1> -->
+	</div>
+
+	<!-- 模板写法三 -->
+	<template id="demo">
+		<h1 style="color:red">我是template模板标签</h1>
+	</template>
+	
+	<!-- 模板写法四 -->
+	<script type="x-template" id="demo2">
+		<h1 style="color:red">我是script模板标签</h1>
+	</script>
+	
+	<script type="text/javascript">
+		var app = new Vue({
+			el:'#app',
+			data:{
+				
+			},
+			// 模板写法二
+			// template:`
+			// 	<h1 style="color:red ">我是选项模板</h1>
+			// `,
+			template:'#demo2'
+		});
+	</script>
+</body>
+</html>

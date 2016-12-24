@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue动画 vue-else-if</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/index.css">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+
+</head>
+<body>
+	<h1>vue动画 vue-else-if</h1>
+	<hr>
+
+	<div id="app">
+		<p v-if="type === 'A'">
+			A
+		</p>
+		<p v-else-if="type === 'B'">
+			B
+		</p>
+		<p v-else-if="type === 'D'">
+			C
+		</p>
+		<p v-else="type === 'D'">
+			D
+		</p>
+
+		<transition name="fade">
+			<p v-if="show">Hidden me!!!</p>
+		</transition>
+		<button @click="hidden">hidden</button>
+	</div>
+
+	<style type="text/css">
+		.fade-enter,.fade-leave-active{/*enter插入，leave移除，这里把fade-leave-active看成fade-leave比较好理解*/
+			opacity: 0;
+		}
+		.fade-enter-active,.fade-leave-active{
+			transition: opacity 1s;
+		}
+	</style>
+
+	
+	<script type="text/javascript">
+		//一般不用Vue动画，用CSS
+		var app = new Vue({
+			el:'#app',
+			data:{
+				type:'B',
+				show:true
+			},
+			methods:{
+				hidden:function(){
+					if(this.show){
+						this.show = false;
+					}else{
+						this.show = true;
+					}
+					
+					console.log(1)
+				}
+			}
+		});
+	</script>
+</body>
+</html>

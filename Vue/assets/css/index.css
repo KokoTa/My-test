@@ -1,0 +1,10 @@
+body{
+	padding: 50px;
+}
+h1,h2,h3{
+	color: orange;
+	font-weight: bold;
+}
+hr{
+	border: 1px dashed orange;
+}

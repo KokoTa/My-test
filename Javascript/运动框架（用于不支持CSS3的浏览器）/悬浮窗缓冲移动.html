@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+<script type="text/javascript">
+window.onscroll=function(){
+	var a = document.getElementById('a');
+	var scrollTop = document.documentElement.scrollTop||document.body.scrollTop;//获得当前的scrollTop值，由于浏览器不同因此需要兼容
+	Move(document.documentElement.clientHeight-a.offsetHeight+scrollTop);//target=滚动后a应该处于屏幕中的位置
+
+}
+
+	var time=null;//设置一个容器存放定时器
+	function Move(target){
+		var a = document.getElementById('a');
+		clearInterval(time);//先清除定时器，以免滚动后启用多个定时器引起Bug
+		time = setInterval(function(){
+			var speed = (target-a.offsetTop)/4;//参考缓冲运动注释
+			speed=speed>0?Math.ceil(speed):Math.floor(speed);
+			if(a.offsetTop==target){
+				clearInterval(time);
+			}else{
+				a.style.top = a.offsetTop+speed+'px';
+			}
+		},30)
+	}
+
+
+</script>
+<style type="text/css">
+	#a{width: 100px;height: 200px;position: absolute;background-color: red;right: 0;bottom: 0;}
+	body{height: 2000px;}
+</style>
+</head>
+<body>
+<div id="a"></div>
+</body>
+</html>

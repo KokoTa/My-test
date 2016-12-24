@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Component-2</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/index.css">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+
+</head>
+<body>
+	<h1>Component-2</h1>
+	<hr>
+
+	<div id="app">
+		<world here="China"></world><!-- 一般不直接传值 -->
+		<hello v-bind:there="message"></hello><!-- v-bind将属性与app中的data值绑定 -->
+	</div>
+
+	<script type="text/javascript">
+	 	//组件是单项数据流，只允许父组件（app）向子组件（T1,T2）传递值
+		var T1 = {
+			template:'<div>Here is {{here}}</div>',
+			props:['here']
+		} 
+		var T2 = {
+			template:'<div>There are {{there}}</div>',
+			props:{
+				'there':Number//判断here传入的值类型是否是Number
+			}
+		} 
+
+		var app = new Vue({
+			el:'#app',
+			data:{
+				message:'USA'
+			},
+			components:{
+				'world':T1,
+				'hello':T2
+			}
+		});
+	</script>
+</body>
+</html>

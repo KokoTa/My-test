@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Get Property Descriptor Example</title>
+    <script type="text/javascript">
+    window.onload=function(){
+    	var a = document.getElementById('a');
+    	var time = null;//创建一个容器存放定时器
+    	function moveIn(target){//target为Div要移动到的位置
+    		var speed=0;//设置一个速度变量
+    		clearInterval(time);//先关闭定时器以免引起Bug
+    		time=setInterval(function(){
+    			if(a.offsetLeft>target){//让当前Div的位置和目标位置进行比较从而确定速度，即应该往左移动还是往右移动
+	    			speed=-10;
+	    		}else{
+	    			speed=10;
+	    		}
+    			if(a.offsetLeft==target){
+    				clearInterval(time);//当当前位置和目标位置相等时关闭定时器
+    			}else{
+    				a.style.left = a.offsetLeft+speed+'px';//不相等时进行移动
+    			}
+    		},30)
+    	}
+    	a.onmouseover=function(){
+    		moveIn(0);
+    	}
+    	a.onmouseout=function(){
+    		moveIn(-200);
+    	}
+//以上是简单的移动
+    }
+    </script>
+    <style type="text/css">
+    	*{margin:0;padding:0;}
+		#a{width: 200px;height: 400px;position: absolute;background: red;left:-200px;}
+		span{width: 40px;line-height: 30px;background: yellow;position: absolute;text-align: center;top:170px;left: 200px;font-weight: bold;font-size: 10px;}
+    </style>
+</head>
+<body>
+    <div id="a">
+    	<span>Go Right</span>
+    </div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>computed</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/index.css">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+
+</head>
+<body>
+	<h1>computed</h1>
+	<hr>
+
+	<div id="app">
+		<p>原价：{{price}}</p>
+		<p>折扣：{{discount}}</p>
+		<p>现价：{{now}}</p>
+		<p><button @click="add">+</button></p>
+	</div>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el:'#app',
+			data:{
+				price:10,
+				discount:0.6
+			},
+			computed:{
+				now:function(){
+					return this.now = '￥' + (this.price * this.discount).toFixed(1);
+				}
+			},
+			methods:{
+				add:function(){
+					this.price++;
+				}
+			}
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+<script type="text/javascript">
+	window.onload = function(){
+		var one = document.getElementById('one');
+		var input = one.getElementsByTagName('input');
+		var div = one.getElementsByTagName('div');
+		for(var i=0;i<input.length;i++){
+			input[i].index=i;
+			input[i].onclick=function(){
+				for(var i=0;i<div.length;i++){
+					input[i].style.background="";
+					div[i].style.display="none";
+				}
+				this.style.background="red";
+				div[this.index].style.display="block";
+				alert(i);
+			}
+		}
+	}
+</script>
+<style type="text/css">
+	#one div{background: gray;height: 100px;width: 100px;display: none;}
+</style>
+</head>
+<body>
+<div id="one">
+	<input type="button" id="a" value="a" style="background:red" />
+	<input type="button" id="b" value="b" />
+	<input type="button" id="c" value="c" />
+	<div style="display:block">AAAAA</div> 
+	<div>BBBBB</div> 
+	<div>CCCCC</div> 
+</div>
+</body>
+</html>

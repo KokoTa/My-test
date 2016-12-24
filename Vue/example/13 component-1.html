@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Component-1</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/index.css">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+
+</head>
+<body>
+	<h1>Component-1</h1>
+	<hr>
+
+	<div id="app">
+		<hello></hello>
+		<world></world>
+	</div>
+
+	<script type="text/javascript">
+		Vue.component('hello',{
+			template:'<div>全局化注册&lt;hello&gt;</div>'
+		})
+
+		var insideTemplate = {
+			template:'<div>局部注册&lt;world&gt;</div>'
+		} 
+
+		var app = new Vue({
+			el:'#app',
+			data:{
+				
+			},
+			components:{
+				'world':insideTemplate
+			}
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>$ 实例属性</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/index.css">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+	<script type="text/javascript" src="../assets/js/jquery-3.1.1.js"></script>
+
+</head>
+<body>
+	<h1>$ 实例属性</h1>
+	<hr>
+
+	<div id="app">
+		{{message}}
+	</div>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el:'#app',
+			data:{
+				message:"Hello Vue"
+			},
+			mounted:function(){//JQ只能在生命周期4和6中使用
+				console.log('4-mounted 被创建');
+				$('#app').html('This is JQ!')
+			},
+			methods:{
+				add:function(){
+					this.message = "Hello!"
+				}
+			}
+		});
+
+		//实例属性举例
+		console.log(app);
+		console.log(app.$el);
+		console.log(app.message);
+		console.log(app.add);
+	</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>构造器的生命周期</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/index.css">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+
+</head>
+<body>
+	<h1>构造器的生命周期</h1>
+	<hr>
+
+	<div id="app">
+		<p>{{message}}</p>
+		<p><button @click="plus">+</button></p>
+	</div>
+	<button onclick="clearAll()">解绑</button>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el:'#app',
+			data:{
+				message:10
+			},
+			methods:{
+				plus:function(){
+					this.message++;
+				}
+			},
+			//10个生命周期
+			beforeCreate:function(){
+				console.log('1-beforeCreate 初始化之后,数据部署');
+			},
+			created:function(){
+				console.log('2-created 创建完成，组件加载完毕');
+			},
+			beforeMount:function(){
+				console.log('3-beforeMount 挂载之前,创建虚拟DOM');
+			},
+			mounted:function(){
+				console.log('4-mounted 挂载之后,载入虚拟DOM');
+			},
+			beforeUpdate:function(){
+				console.log('5-beforeUpdate 数据更新前');
+			},
+			updated:function(){
+				console.log('6-updated 数据更新后');
+			},
+			//<keep-alive></keep-alive>
+			activated:function(){
+				console.log('7-activated');
+			},
+			deactivated:function(){
+				console.log('8-deactivated');
+			},
+			beforeDestroy:function(){
+				console.log('9-beforeDestroy 销毁之前');
+			},
+			destroyed:function(){
+				console.log('10-destroy 销毁之后');
+			}
+		});
+
+		function clearAll(){
+			app.$destroy();
+		}
+	</script>
+</body>
+</html>

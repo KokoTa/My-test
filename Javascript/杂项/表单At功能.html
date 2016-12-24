@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>表单At功能</title>
+	<style type="text/css">
+		form{
+			position: relative;
+			width: 200px;
+			height: 220px;
+		}
+		textarea{
+			width: 100%;
+			height: 200px;
+		}
+		.hack{
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 200px;
+			height: 200px;
+			visibility: hidden;/* 与display: none;不同，它占有空间 */
+		}
+		#list{
+			border: 1px solid black;
+			text-align: center;
+			margin: 0;
+			padding: 0;
+			width: 50px;
+			position: absolute;
+			visibility: hidden;
+		}
+		#list li{
+			list-style: none;
+			width: 100%;
+			color: white;
+			background: black;
+		}
+		#list li:hover{
+			background: white;
+			color: black;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<form name="x">
+		<textarea name="content"></textarea>
+		<input type="submit" name="submit" value="提交">
+		<div class="hack"></div><!-- 用于计算光标位置的hack -->
+	</form>
+	<ul id="list">
+		<li>AAA</li>
+		<li>BBB</li>
+		<li>CCC</li>
+	</ul>
+	<script type="text/javascript">
+		var form = document.forms.x;
+
+		//获得光标位置
+		function getPosition(value){
+			var hack = document.getElementsByClassName('hack')[0];
+			hack.textContent = value;//兼容firefox
+			var span = document.createElement('span');
+			hack.appendChild(span);
+			var pos = {
+				top: span.offsetTop+span.offsetHeight,
+				left: span.offsetLeft
+			};
+			hack.innerHTML = "";
+			return pos;
+		}
+
+		//在光标位置显示列表，点击列表内容后传给回调函数
+		function showList(pos,callback){
+			var box = document.getElementById('list');
+			box.style.top = form.offsetTop + pos.top + 'px';
+			box.style.left = form.offsetLeft + pos.left + 'px';
+			box.style.visibility = "visible";
+			box.onclick = function(event){
+				var target = event.target;
+				if(target.tagName === 'LI'){
+					box.style.visibility = 'hidden';
+					console.log(target.textContent);
+					callback(target.textContent);
+				}
+			}
+		}
+
+		form.addEventListener('input', function(event){
+			var target = event.target;
+			var cursor = target.selectionStart;//光标位置,从1开始计
+			console.log(target.value,cursor);
+			if(target.value.charAt(cursor-1) === '@'){//遇到@后显示列表
+				showList(getPosition(target.value),function(name){
+					var end = cursor+name.length;
+					//将要替代的内容，被替代内容的起始，结束，最后光标位置
+					target.setRangeText(name,cursor,end,'end');
+					target.focus();
+				});
+			}
+		})
+	</script>
+</body>
+</html>

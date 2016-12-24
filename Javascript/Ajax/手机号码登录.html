@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>手机号码登录</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+			font-family: "微软雅黑";
+		}
+		.loginForm{
+			width: 400px;
+			height: 300px;
+			margin: 0 auto;
+			background: gray;
+			border: 10px solid black;
+			border-radius: 10px;
+		}
+		.loginForm h1{
+			font-size: 1.5em;
+			font-weight: bold;
+			text-align: center;
+			background: black;
+			color: white;
+			line-height: 2;
+		}
+		.loginForm fieldset{
+			border: none;
+			padding: 20px;
+		}
+		.loginForm div{
+			margin: 20px;
+		}
+		.loginForm .tip{
+			display: inline-block;
+			padding-top: 5px;
+			padding-left: 70px;
+			font-size:0.5em;
+			cursor: default;
+			color: lightgray;
+		}
+		.loginForm div label{
+			font-weight: bold;
+		}
+		.loginForm div input{
+			width: 220px;
+		}
+		.loginForm button{
+			width: 100%;
+			height: 30px;
+			background: black;
+			color: white;
+			border: 0;
+			border-radius: 10px;
+			box-shadow: 0 0 20px white inset;
+			cursor: pointer;
+		}
+		.loginForm #message{
+			margin: 0 20px;
+			text-align: center;
+			font-size: 1.5em;
+			font-weight: bold;
+			height: 1.5em;
+		}
+		.err{
+			color: red;
+		}
+		.pass{
+			color: green;
+		}
+		.loginForm .dis{
+			cursor: default;
+			background: gray;
+		}
+	</style>
+</head>
+<body>
+	<form action="./login" class="loginForm" name="loginForm" target="result" autocomplete="true">
+		<h1>手机号码登录</h1>
+		<fieldset>
+			<div id="message"></div>
+			<div>
+				<label for="phone">手机号：</label>
+				<input type="tel" name="phone" id="phone" class="phone" maxlength="11" pattern="^0?(13[0-9]|15[012356789]|18[0236789]|14[57])[0-9]{8}$" required><br>
+				<span class="tip">11位的手机号码</span>
+			</div>
+			<div>
+				<label for="password">密　码：</label>
+				<input type="password" name="password" id="password" class="password"><br>
+				<span class="tip">至少6位，包含数字和字母</span>
+			</div>
+			<div>
+				<button name="login">登 录</button>
+			</div>
+		</fieldset>
+	</form>
+	<!-- 用于无刷新提交 -->
+	<iframe name="result" id="result" style="display: none;"></iframe>
+
+	<script type="text/javascript">
+		(function(){
+			//表单和表单控件一般以name属性来获取
+			var form = document.forms.loginForm;
+			var masg = document.getElementById('message');
+
+			//是否显示错误
+			function invalidWarn(msg,cls){
+				if(cls){
+					masg.innerHTML = msg;
+					masg.className = cls;
+				}else{
+					masg.innerHTML = "";
+					masg.className = "";
+				}
+			}
+			//是否改变按钮状态
+			function disableSubmit(flag){
+				if(flag){
+					form.login.disabled = true;
+					form.login.className = "dis";
+				}else{
+					form.login.removeAttribute('disabled');
+					form.login.className = "";
+				}
+				
+			}
+			//重置所有状态
+			function clearInvalid(ele){
+				invalidWarn();
+				ele.focus();
+			}
+
+			//输入时的状态变化
+			form.addEventListener('input', function(event){
+				clearInvalid(event.target);//消除错误提示
+				disableSubmit(false);//让登录按钮可用
+			});
+
+			//验证方式1
+			//提交前若不与pattern匹配，触发invalid
+			form.phone.addEventListener('invalid', function(event){
+				event.preventDefault();//阻止默认的错误提示
+				var input = form.phone;
+				invalidWarn("请输入正确手机号码",'err');
+			})
+
+			//验证方式2
+			//提交前自定义验证
+			form.addEventListener('submit', function(event){
+				var psw = form.password.value;
+				var message = "";
+				//密码验证
+				if(psw.length < 6){
+					message = "密码长度至少大于6位";
+				}else if(!/\d/.test(psw)||!/[a-z]/i.test(psw)){
+					message = "密码必须包含数字和字母";
+				}
+				//若密码验证不通过
+				if(message){
+					event.preventDefault();//不提交
+					invalidWarn(message,'err');
+					return;
+				}
+				disableSubmit(true);//禁用提交按钮
+			})
+
+			//无刷新提交
+			var frame = document.getElementById('result');
+			frame.addEventListener('load', function(event){
+				try{
+					var result = JSON.parse(frame.contentWindow.document.body.textContent);//解析JSON
+					//获取成功后重置
+					disableSubmit(false);
+					//识别结果
+					if(result.code === 200){
+						invalidWarn('pass','登陆成功');
+						form.reset();
+					}
+				}catch(error){
+					alert(error);
+				}
+			})
+		})()
+	</script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas鼠标跟随+旋转导航</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		canvas{
+			background: black;
+		}
+		ul{
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			margin: auto;
+			width: 50px;
+			height: 200px;
+		}
+		li{
+			list-style: none;
+			display: block;
+			width: 50px;
+			height: 200px;
+			background: gray;
+			box-shadow: 2px 2px 5px #fff;
+			position: absolute;
+			transform-origin: 0px 200px;
+			transition: 1s;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+	<ul>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+</body>
+<script type="text/javascript">
+window.onload = function(){
+	var ul = document.getElementsByTagName('ul')[0];
+	var lis = document.querySelectorAll('li');
+
+	/**
+	 * 导航
+	 */
+	//封面点击事件
+	//第一次展开
+	//第二次收回
+	var flag = true;
+	lis[lis.length-1].onclick = function(){
+		if(flag){
+			for(var i=0;i<lis.length;i++){
+				lis[i].style.transform = "rotate("+(-90+15*i)+"deg)";
+			}
+			flag = false;
+		}else{
+			for(var i=0;i<lis.length;i++){
+				lis[i].style.transform = "rotate(0deg)";
+			}
+			flag = true;
+		}
+
+	};
+	//每个li的点击事件,最后一个li不管
+	//点击的那张图变为0deg
+	//点击的那张图的左边依此减去15deg
+	//点击的那张图的右边，除第一张初始加30deg依此加上15deg
+	for(var i=0;i<lis.length-1;i++){
+		lis[i].index = i;
+		lis[i].onclick = function(){
+			this.style.transform = 'rotate(0deg)';
+			//左边
+			var initLeftDeg = 0;
+			for(var j=this.index-1;j>=0;j--){
+				initLeftDeg -= 15;
+				lis[j].style.transform = 'rotate('+ initLeftDeg +'deg)';
+			}
+			//右边
+			var initRightDeg = 15;
+			for(var k=this.index+1;k<lis.length;k++){
+				initRightDeg += 15;
+				lis[k].style.transform = 'rotate('+ initRightDeg +'deg)';
+			}
+		};
+	}
+
+	/**
+	 * 鼠标
+	 */
+	var canvas = document.getElementById('canvas');
+	var context = canvas.getContext('2d');
+	//window->innerWidth;dom->offsetWidth
+	 canvas.width = window.innerWidth;
+	 canvas.height = window.innerHeight+1000;
+	 /**
+	  * 圆：半径、颜色、位置、速度都不同
+	  * var ball = {
+	  * 	x:x轴位置，
+	  * 	y:y轴位置，
+	  * 	r:圆半径,
+	  * 	vx:x轴速度,
+	  * 	vy:y轴速度,
+	  * 	color:颜色
+	  * }
+	  */
+	 //画圆
+	 function draw(ball){
+	 	context.beginPath();
+	 	//canvas只认识弧度，不认识角度
+	 	//弧度 = 角度*π/180
+	 	context.arc(ball.x,ball.y,ball.r,0,2*Math.PI);
+	 	context.fillStyle = ball.color;
+	 	context.globalCompositeOperation = 'lighter'; //重叠的地方高亮
+	 	context.fill();
+	 }
+	 //随机函数(min到max的随机数)
+	 function random(min,max){
+	 	return Math.round(Math.random()*(max-min)+min);
+	 }
+	 
+	 var colors = ['red','blue','gray','orange','yellow','pink','white'];
+	 var balls = [];
+	 var timer;
+	 var go = true;
+
+	 //鼠标移动事件，onmousemove出发频率很高，所以创建的圆要少
+	 canvas.onmousemove = function(e){
+	 	for(var i=0;i<2;i++){
+	 		 var ball = {
+	 			x:random(-5,5)+e.clientX,
+	 		 	y:random(-5,5)+e.clientY+window.pageYOffset,
+	 			r:random(10,45),
+	 			vx:Math.random()-0.5,
+	 			vy:Math.random()-0.5,
+	 			color:colors[random(0,colors.length-1)]
+	 		}
+
+	 		balls.push(ball);
+
+	 		if(balls.length>300){
+	 			balls.shift();
+	 		}
+	 		
+	 		function drawBall(){
+	 			context.clearRect(0,0,canvas.width,canvas.height);
+
+	 			for(var i=0;i<balls.length;i++){
+	 				//需要把球的x.y,r进行变化
+	 				balls[i].x += balls[i].vx*8;
+	 				balls[i].y += balls[i].vy*8;
+	 				balls[i].r = balls[i].r*0.94;
+
+	 				if(balls[i].r <1 ){//r<1时将小球删除，且跳过绘制，
+	 					balls.splice(i,1);
+	 					continue;//删除后找不到球了，绘制时会报错，所以要跳出
+	 				}
+
+	 				draw(balls[i]);
+	 			}
+
+	 			if(balls.length === 0){//for中不可放与定时器有关的语句
+	 				clearInterval(timer);
+	 				go = true;
+	 			}
+
+	 			console.log(balls.length);
+	 		}
+	 		
+	 		if(go){//只开一个定时器
+	 			timer = setInterval(drawBall,30);
+	 			go = false;
+	 		}
+	 		
+
+	 	}
+	 }
+};
+	
+</script>
+</html>

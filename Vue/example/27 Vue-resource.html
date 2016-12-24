@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vue-resource(Vue的ajax)</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/index.css">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>
+
+</head>
+<body>
+	<h1>vue-resource(Vue的ajax)</h1>
+	<hr>
+
+	<div id="app">
+		{{message}}
+	</div>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el:'#app',
+			data:{
+				message:"Hello Vue"
+			},
+			// beforeMount:function(){
+			// 	// GET /someUrl
+			// 	this.$http.get('./test.txt').then((response) => {
+			// 	// success callback
+			// 		console.log(response);
+			// 		this.message = response.body;
+			// 	}, (response) => {
+			// 	// error callback
+			// 		console.log('error');
+			// 	});
+			// },
+			beforeMount:function(){
+				var formData = new FormData();
+				formData.append('number','10');
+				// POST /someUrl
+				this.$http.post('./test.php',formData).then((response) => {
+				// success callback
+					console.log(response);
+					this.message = response.body;
+				}, (response) => {
+				// error callback
+					console.log('error');
+				});
+			}
+		});
+	</script>
+</body>
+</html>

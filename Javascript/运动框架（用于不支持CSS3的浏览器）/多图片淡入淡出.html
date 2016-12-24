@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+<script type="text/javascript">
+	window.onload=function(){
+		var div = document.getElementsByTagName('div');
+		for(var i=0;i<div.length;i++){
+			div[i].alpha = 30;//为每个div设置透明度属性alpha，注意：只要是多物体运动，所有东西（如定时器、透明度）都必须独立，不能共享
+			div[i].timer = null;
+			div[i].onmouseover=function(){
+				move(this,100);
+			}
+			div[i].onmouseout=function(){
+				move(this,30);
+			}
+		}
+		function move(obj,target){
+			clearInterval(obj.timer);//每个定时器都是独立的，前面都要有对应的对象
+			obj.timer = setInterval(function(){
+				var speed = (target-obj.alpha)/4;//每个透明度也是独立的，要有对应的对象
+				speed=speed>0?Math.ceil(speed):Math.floor(speed);
+				if(obj.alpha==target){
+					clearInterval(obj.timer);
+				}else{
+					obj.alpha +=speed;
+					console.log(obj.alpha);
+					obj.style.opacity = obj.alpha/100;
+					obj.style.filter = 'alpha:(opacity:'+obj.alpha+')';
+				}
+			},30)
+		}
+	}
+</script>
+<style type="text/css">
+	div{height: 200px;width: 200px;background: red;float: left;margin: 20px;opacity: 0.3;filter:alpha(opacity:30);}
+</style>
+</head>
+<body>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+</body>
+</html>

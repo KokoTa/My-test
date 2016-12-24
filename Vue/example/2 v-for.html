@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>v-for</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/index.css">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+
+</head>
+<body>
+	<h1>v-for</h1>
+	<hr>
+
+	<div id="app">
+		<ul>
+			<li v-for="student in sortStudents">
+				{{student}}
+			</li>
+		</ul>
+		<hr>
+		<ul>
+			<li v-for="(one,index) in sortPeople">
+				{{index}} {{one.name}}-{{one.age}}
+			</li>
+		</ul>
+	</div>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el:'#app',
+			data:{
+				students:[12,42,65,23,64,35],
+				people:[
+					{name:'keke',age:'53'},
+					{name:'koko',age:'15'},
+					{name:'kuku',age:'65'},
+					{name:'knkn',age:'23'},
+					{name:'kckc',age:'44'}
+				]
+			},
+			computed:{
+				/*
+				students:function(){
+					return this.students.sort();//Error when rendering root instance: 由于污染了原始数据（data.students）
+				}
+				 */
+				sortStudents:function(){
+					//相当于在data中添加了sortStudents数据
+					return this.students.sort(function(a,b){
+						return a-b;
+					})
+				},
+				sortPeople:function(){
+					return this.people.sort(function(a,b){
+						return a.age - b.age;
+					});
+				}				
+			}
+		});
+	</script>
+</body>
+</html>

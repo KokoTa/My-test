@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>mixin</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/index.css">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+
+</head>
+<body>
+	<h1>mixin</h1>
+	<hr>
+
+	<div id="app" @click="add">
+		{{message}}
+	</div>
+
+	<script type="text/javascript">
+		//两种混入方式
+		
+		Vue.mixin({//全局的要慎用
+			created:function(){
+				console.log('全局混入');
+			}
+		})
+		var mix = {
+			created:function(){//除了生命周期，其余都会被构造器的覆盖
+				console.log('外部混入');
+			},
+			// data:{
+			// 	message:"我覆盖了原来的数据？"
+			// },
+			// methods:{
+			// 	add:function(){
+			// 		console.log("我覆盖了原来的方法？");
+			// 	}
+			// }
+		}
+		var app = new Vue({
+			el:'#app',
+			data:{
+				message:"Hello Vue"
+			},
+			methods:{
+				add:function(){
+					console.log("内部方法");
+				}
+			},
+			created:function(){
+				console.log('内部输出');
+			},
+			mixins:[mix]
+
+		});
+	</script>
+</body>
+</html>

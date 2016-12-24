@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue.set 全局操作</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/index.css">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+
+</head>
+<body>
+	<h1>Vue.set 全局操作</h1>
+	<hr>
+
+	<div id="app">
+		<ul>
+			<li v-for="x in goods">
+				{{x.name}} - {{x.num}}
+			</li>
+		</ul>
+		<p>总计{{count}}件商品</p>
+		<button @click="clearAll">清空</button>
+	</div>
+
+	<button onclick="add()">+++++</button>
+
+	<script type="text/javascript">
+		function add(){
+			//Vue.set(outsideData,'count','4');//这个方法主要用于避开 Vue 不能检测属性被添加的限制。一般很少用,构建工具中会用到。
+			outsideData.goods.push({name:'house',num:'1'})
+			app.count++;
+		}
+
+		var outsideData = {
+			count:3,
+			goods:[
+				{name:'car',num:'1'},
+				{name:'pen',num:'2'}
+			]
+		}
+		var app = new Vue({
+			el:'#app',
+			data:outsideData,
+			methods:{
+				clearAll:function(){
+					this.count = 0;
+					this.goods = [];
+				}
+			}
+		});
+	</script>
+</body>
+</html>

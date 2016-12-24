@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>watch</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/index.css">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+
+</head>
+<body>
+	<h1>watch</h1>
+	<hr>
+
+	<div id="app">
+		<p>数量：{{n}}</p>
+		<button @click="add">+</button>
+		<button @click="cut">-</button>
+	</div>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el:'#app',
+			data:{
+				n:1
+			},
+			methods:{
+				add:function(){
+					this.n++;
+				},
+				cut:function(){
+					this.n--;
+				}
+			},
+			// watch:{//监控数据,函数名对应数据名
+			// 	n:function(newVal,oldVal){
+			// 		if(newVal <= 0){
+			// 			this.n = 0;
+			// 		}
+			// 	}
+			// }
+		});
+
+		app.$watch('n',function(newVal,oldVal){//外置监控
+			if(newVal <= 0){
+				app.n = 0;
+			}
+		})
+	</script>
+</body>
+</html>

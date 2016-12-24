@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>其他选项</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/index.css">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+
+</head>
+<body>
+	<h1>其他选项</h1>
+	<hr>
+
+	<div id="app">
+		<hello></hello>
+		<world></world>
+	</div>
+
+	<script type="text/javascript">
+		//$parent，由于作用域都在app内，所以this.$parent都是指向构造器的
+		//delimiters,防止{{}}与其他插件冲突，可以用其他符号代替{{}}
+		
+		Vue.component('hello',{
+			template:'<p>全局：${this.$parent.message}</p>',
+			delimiters:["${","}"]
+		});
+
+		var cp = {
+			template:'<p>外部：{{this.$parent.message}}</p>'
+		};
+
+		var app = new Vue({
+			el:'#app',
+			data:{
+				message:"Hello World"
+			},
+			components:{
+				'world':cp
+			}
+		});
+	</script>
+</body>
+</html>

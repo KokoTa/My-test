@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+<script type="text/javascript">
+window.onload = function(){
+	var oDiv = document.getElementById('div1');//获得div
+	var aUl = oDiv.getElementsByTagName('ul')[0];//获得div中的ul
+	var aLi = aUl.getElementsByTagName('li');//获得ul中的li
+	aUl.innerHTML += aUl.innerHTML;//让内容重复一遍
+	aUl.style.width = aLi[0].offsetWidth*aLi.length+'px';//设置ul的总宽度
+	var a = document.getElementById('a');
+	var b = document.getElementById('b');
+	var speed = 0;
+	a.onmouseover = function(){
+		speed = 2;
+	}
+	b.onmouseover = function(){
+		speed = -2;
+	}
+	setInterval(function(){
+		aUl.style.left = aUl.offsetLeft + speed + 'px';//让ul根据speed的速度动起来
+		if(aUl.offsetLeft<-aUl.offsetWidth/2){//这是针对ul向左移动的，ul左间距为ul总长度一半的时候回调,注意此时间距是个负数
+			aUl.style.left = '0';//offsetLeft只读，不可改写，因此要用style.left
+		}
+		if(aUl.offsetLeft>0){//若向右移动则让ul回调到左边去,可以去掉CSS中的overflow属性看看
+			aUl.style.left = -aUl.offsetWidth/2+'px';
+		}
+	},30)
+}
+</script>
+<style type="text/css">
+	*{margin: 0;padding: 0;}
+	img {width: 100px;height: 100px;}
+	li{margin: 0px;padding:0px;list-style: none;float: left;}
+	div{width: 400px;height: 100px;margin:100px auto;position: relative;overflow: hidden;background: red;}/*注意position和overflow的设置！！*/
+	ul{position: absolute;}
+	#a{border: 1px solid black;text-align: center;}
+	#b{border: 1px solid black;text-align: center;}
+</style>
+</head>
+<body>
+<div id="a">Left</div>
+<div id="div1">
+	<ul>
+		<li><img src="1.jpg"></li>
+		<li><img src="1.jpg"></li>
+		<li><img src="1.jpg"></li>
+		<li><img src="1.jpg"></li>
+	</ul>
+</div>
+<div id="b">Right</div>
+</body>
+</html>

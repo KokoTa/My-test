@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<script type="text/javascript">
+window.onload=function(){
+	var div = document.getElementsByTagName('div');
+	if(div[0]){
+		div[0].style.background = "yellow";
+		div[div.length-1].style.background = "green";
+	}
+	
+
+	function getPos(event){
+		var scrollTop = document.documentElement.scrollTop||document.body.scrollTop;
+		var scrollLeft = document.documentElement.scrollLeft||document.body.scrollLeft;
+		return {x:event.clientX+scrollLeft,y:event.clientY+scrollTop};
+	}
+	document.onmousemove = function(event){
+		var event = event||window.event;
+		var pos = getPos(event);
+		for(var i=div.length-1;i>0;i--){//先利用for的逆循环，让后一个跟着前一个走
+			div[i].style.left = div[i-1].offsetLeft+'px';
+			div[i].style.top = div[i-1].offsetTop+'px';
+		}
+		//之后再变换第一个的位置
+		div[0].style.top = pos.y+'px';
+		div[0].style.left = pos.x+'px';
+
+	}
+	
+
+}
+</script>
+<style type="text/css">
+	div{width: 100px;height: 100px;position: absolute;background: red;}
+</style>
+<body style="height:2000px;">
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+<div></div><div></div><div></div>
+</body>
+</html>

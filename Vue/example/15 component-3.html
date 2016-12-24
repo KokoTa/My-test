@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Component-3</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/index.css">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+
+</head>
+<body>
+	<h1>Component-3</h1>
+	<hr>
+
+	<div id="app">
+		<world here="China"></world>
+	</div>
+
+	<script type="text/javascript">
+		//嵌套组件,多行template用``
+		//注意city既然是T1的子组件，那么只能嵌套在T1的模板里面，否则出错,要注意父子关系
+		var city = {
+			template:'<p>This is a city</p>'
+		}
+		var T1 = {
+			template:`
+				<div>Here is {{here}}
+					<city></city>
+				</div>
+			`,
+			props:['here'],
+			components:{
+				'city':city
+			}
+		}
+
+		var app = new Vue({
+			el:'#app',
+			data:{
+				message:'USA'
+			},
+			components:{
+				'world':T1
+			}
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue.directive 自定义指令</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/index.css">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+
+</head>
+<body>
+	<h1>Vue.directive 自定义指令</h1>
+	<hr>
+
+	<div id="app">
+		<div v-direction.exp1.exp2="color">
+			{{num}}
+		</div>
+		<button @click="plus">+</button>
+		<button @click="minus">-</button>
+	</div>
+	<br>
+	<button onclick="unbindAll()">解绑</button>
+	
+	<script type="text/javascript">
+		Vue.directive('direction',{//有五个生命周期
+			bind:function(el,binding,vnode){		//被绑定
+				console.log('1 - bind');
+				// var s = JSON.stringify;
+				// el.innerHTML = 
+				// 	'name: '+s(binding.name)+'<br>'+
+				// 	'value: '+s(binding.value)+'<br>'+
+				// 	'expression: '+s(binding.expression)+'<br>'+
+				// 	'argument: '+s(binding.arg)+'<br>'+
+				// 	'modifiers: '+s(binding.modifiers)+'<br>'+
+				// 	'vnodeKey: '+Object.keys(vnode).join('|');
+				// console.log(s(binding.value),binding.value);
+				el.style = 'color:' + binding.value;
+			},
+			inserted:function(){					//绑定到节点
+				console.log('2 - inserted');
+			},
+			update:function(el,binding,vnode){		//组件更新
+				console.log('3 - update');
+				el.style = 'color:green';
+			},
+			componentUpdated:function(){			//组件更新完成
+				console.log('4 - componentUpdated');
+			},
+			unbind:function(){						//解绑
+				console.log('5 - unbind');
+			},
+		});
+
+		var app = new Vue({
+			el:'#app',
+			data:{
+				color:'red',
+				num:10
+			},
+			methods:{
+				plus:function(){
+					this.num++;
+				},
+				minus:function(){
+					this.num--;
+				}
+			}
+		});
+
+
+		function unbindAll(){//完全销毁一个实例。清理它与其它实例的连接，解绑它的全部指令及事件监听器。
+			app.$destroy();
+		}
+	</script>
+</body>
+</html>

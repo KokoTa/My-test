@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>slot 标签的内容扩展</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/index.css">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+
+</head>
+<body>
+	<h1>slot 标签的内容扩展</h1>
+	<hr>
+
+	<div id="app">
+		<goods v-for="x in goods"><!-- 标签传递内容时会用到slot -->
+			<span slot="n1">{{x.name}}</span>
+			<span slot="n2">{{x.num}}</span>
+		</goods>
+	</div>
+
+	<template id="temp"><!-- template里面都要有一个根标签 -->
+		<p>
+			名称：<slot name='n1'></slot>
+			数量：<slot name='n2'></slot>
+		</p>
+	</template>
+
+	<script type="text/javascript">
+		var temp = {
+			template:'#temp'
+		}
+		var app = new Vue({
+			el:'#app',
+			data:{
+				goods:[
+					{name:'pen',num:10},
+					{name:'car',num:1}
+				]
+			},
+			components:{
+				'goods':temp
+			}
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+<script type="text/javascript">
+window.onload=function(){
+	var a = document.getElementById('a');//获得Id为a的元素
+	var time=null//设置一个容器来放置定时器
+	a.onmouseover=function(){
+		clearInterval(time);//先清除定时器，防止重复启动定时器引起Bug
+		time=setInterval(function(){//设置定时器
+			var speed = (500-a.offsetLeft)/10;//设置速度，速度的值=（目标值-当前值)/10
+			speed=speed>0?Math.ceil(speed):Math.floor(speed);//速度为正向上取整，速度为负向下取整，防止速度为小数而不运动
+			a.style.left = a.offsetLeft+speed+'px';//当前a的值=a当前的值+速度+'px'
+			if(speed==0){
+				clearInterval(time);//当速度为0时停止计时器
+			}
+			console.log(a.offsetLeft,speed);
+		},30)
+		
+	}
+}
+</script>
+<style type="text/css">
+	#a{width: 100px;height: 100px;position: absolute;background-color: red;}
+</style>
+</head>
+<body>
+<div id="a"></div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue.extend 构造器扩展</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/index.css">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+
+</head>
+<body>
+	<h1>Vue.extend 构造器扩展</h1>
+	<hr>
+
+	<div id="app">
+
+	</div>
+
+	<script type="text/javascript">
+		var header = Vue.extend({
+			template:'<p>{{message}}</p>',
+			data:function(){
+				return{
+					message:'Hello Extend!'
+				}
+			}
+		})
+		new header().$mount('#app');//$mount挂载,一般挂载到ID，挂载的模板都是无属性的标签实体，与组件有区别
+	</script>
+</body>
+</html>

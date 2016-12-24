@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>v-on</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/index.css">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+
+</head>
+<body>
+	<h1>v-on</h1>
+	<hr>
+
+	<div id="app">
+		<p>{{a}}</p>
+		<p>
+			<button v-on:click = 'plus'>+1</button>
+			<button @click = 'minus'>-1</button>
+			<input type="text" name="conmpute" @keyup.enter = "onEnter">
+			<input type="text" name="conmpute" @keyup.13 = "onEnter">
+		</p>
+	</div>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el:'#app',
+			data:{
+				a:10,
+				b:10
+			},
+			methods:{
+				plus:function(){
+					this.a++;
+				},
+				minus:function(){
+					this.a--;
+				},
+				onEnter:function(){
+					this.a = parseInt(this.a) + parseInt(this.b);
+				}
+			}
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>照片墙效果</title>
+	<style type="text/css">
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		img{
+			width: 100px;
+			height: 100px;
+			float: left;
+		}
+		#wrap{
+			width: 800px;
+			background: gray;
+			overflow: hidden;
+			margin: 0 auto;
+			perspective: 800px;/*景深，即当前容器离用户的距离*/
+		}
+		#btn{
+			width: 80px;
+			height: 30px;
+			text-align: center;
+			background: gray;
+			margin: 0 auto;
+			display: block;
+			outline: 0;
+			border: 0;
+			font: 18px/20px "微软雅黑";
+			border-radius: 10px;
+			box-shadow: 5px 5px 5px #000;
+		}
+		#btn:active{
+			margin-top: 5px;
+			box-shadow: 0 0 0;
+		}
+	</style>
+</head>
+<body>
+	<div id="wrap">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+		<img src="1.jpg" alt="">
+	</div>
+	<button id="btn">效果</button>
+
+	<script type="text/javascript">
+		/**
+		 * 运动步骤
+		 * 1.闪的效果（宽高变为0，scale,随机）
+		 * 2.图片从小变到大，同时透明度从1变到0（上一步效果结束才会执行）
+		 * 3.图片旋转，同时透明度从0变到1,有位移translate（所有图片透明度都为0才执行）
+		 */
+		window.onload=function(){
+			var btn = document.getElementById('btn');
+			var imgs = document.querySelectorAll('img');
+			var on = true;//是否正在动画
+			
+
+			//点击
+			btn.onclick = function(){
+				if(!on){
+					return;
+				}
+				on = false;
+
+				var num = 0; //完成了第二阶段动画的个数
+				var end = 0; //完成了第三阶段动画的个数
+				for(var i=0;i<imgs.length;i++){
+					(function(i){
+						setTimeout(function(){
+							imgs[i].style.transition = "1s";
+							//第一个动画
+							move(imgs[i],'0.5s',function(){
+								this.style.transform = "scale(0)";
+							},function(){
+								//第二个动画
+								move(this,'1s',function(){
+									this.style.transform = "scale(1)";
+									this.style.opacity = "0";
+								},function(){
+									console.log(num);
+									num++;
+									if(num == imgs.length){
+										//第三个动画
+										goBack(end);
+									}
+								})
+							})
+						},Math.random()*1000);
+					})(i)
+				}
+			}
+
+			//运动函数（对象，时间，运动属性函数,运动结束后执行的函数）
+			function move(obj,time,doFn,callback){
+				obj.style.transition = time;
+				doFn.call(obj); //将obj指向doFn后调用
+
+				var flag = false;//解决transitionend的Bug
+			 	obj.addEventListener('transitionend', function(){//这个事件有个BUG，只要出现一次对属性的赋值就会触发
+			 		if(!flag){//只运行一次callback
+			 			callback&&callback.call(obj);//利用逻辑判断的特性，有赋值就执行后面的，没有就返回false
+			 			flag = true;
+			 		}
+			 	},false);
+			}
+
+			//第三个动画的函数
+			function goBack(end){
+				for(var i=0;i<imgs.length;i++){
+					imgs[i].style.transition = "";
+					//imgs[i].style.opacity = '1';
+					//想要物体有CSS3的变化，那么需要给它一个初始值
+					imgs[i].style.transform = 'rotateY(0deg) translateZ('+(-Math.random()*500)+'px)';
+
+					(function(i){
+						setTimeout(function(){
+							move(imgs[i],'2s',function(){
+								this.style.transform = "rotateY(-360deg) translateZ(0px)";
+								this.style.opacity = '1';
+							},function(){
+								end++;
+								if(end == imgs.length){
+									on = true;
+								}
+							})
+						},Math.random()*1000)
+					})(i)
+				}
+			}
+		}
+	</script>
+</body>
+</html>

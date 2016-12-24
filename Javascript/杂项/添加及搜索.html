@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+<script type="text/javascript">
+	window.onload = function(){
+		var a = document.getElementById('a');
+		var x='';
+		for(var i=0;i<a.tBodies[0].rows.length;i++){
+			if(i%2){//取余，为0的背景色不变，因为为0时程序不会执行
+				a.tBodies[0].rows[i].style.background = 'green';
+			}
+			a.tBodies[0].rows[i].onmouseover=function(){//接触发亮
+				 x = this.style.background;//先用x保存当前背景色，用于下一步移除后恢复背景色
+				this.style.background = "yellow";
+			}
+			a.tBodies[0].rows[i].onmouseout=function(){//
+				this.style.background = x;//用于恢复背景色，不然你可以删掉试试
+			}
+//以上是初始表格的背景色变化的代码
+		var name =document.getElementById('t1');
+		var age = document.getElementById('t2');
+		var number = document.getElementById('t3');
+		var add = document.getElementById('add');
+			add.onclick = function(){
+				var newTr = document.createElement('tr');//创建一个新行
+				var newTd = document.createElement('td');//创建一个新列，放入名字
+					newTd.innerHTML=name.value;//传入名字数据
+					newTr.appendChild(newTd);//将新列推入新行
+				var newTd = document.createElement('td');//同理，放入年龄
+					newTd.innerHTML=age.value;
+					newTr.appendChild(newTd);
+				var newTd = document.createElement('td');//同理，放入号数
+					newTd.innerHTML=number.value;
+					newTr.appendChild(newTd);			
+				var newTd = document.createElement('td');//同理,放入一个删除键
+					newTd.innerHTML="<a href='javascript:;'>Delete</a>";
+					newTr.appendChild(newTd);
+				newTd.getElementsByTagName('a')[0].onclick = function(){//设置删除键来删除新建的新行
+					a.deleteRow(this.parentNode.parentNode);//注意tBodies，还有父级子级的关系
+					}	
+				newTr.onmouseover=function(){//新节点也可以接触发亮
+					x = this.style.background;
+					this.style.background = "yellow";
+				}
+				newTr.onmouseout=function(){
+					this.style.background = x;
+				}
+				a.tBodies[0].appendChild(newTr);	//将新行推入到表格中
+				}
+			}
+
+//以上是插入一行具有名字、年龄、号数的代码
+		var search = document.getElementById('search');//获得搜索按钮
+		var txt =document.getElementById('t4');//获得要搜索的内容
+			search.onclick=function(){
+				for(var i=0;i<a.tBodies[0].rows.length;i++){//循环所有行
+					var tab = a.tBodies[0].rows[i].cells[0].innerHTML.toLowerCase();//获得第i行第1列的信息并转换成小写
+					var txt1 = txt.value.toLowerCase();//将搜索的内容转换成小写
+					var arr = txt1.split(' ');//以空格为界把搜索的内容进行分割，获得分割后的内容并形成数组
+					if(i%2){//每次点击时将背景色还原
+						a.tBodies[0].rows[i].style.background = 'green';
+					}else{
+						a.tBodies[0].rows[i].style.background = 'white';
+					}
+					for(var j=0;j<arr.length;j++){//查询行中内容是否有匹配数组，有则行变回灰色
+						if(tab.search(arr[j])!=-1){//saerch查询符返回的是查询后匹配的位置，若有匹配，则返回的数是大于-1的整数
+						a.tBodies[0].rows[i].style.background = 'gray';
+						}
+					}
+					
+				}
+			}
+//以上是一个搜索系统的代码
+		var arrage = document.getElementById('array');//获得排序按钮
+		arrage.onclick=function(){//设置点击事件
+			var newarr=[];//创建一个空数组（a.tBodies[0].rows是个元素集合而不是数组，元素集合是没有sort、join等方法的，而数组有）
+			for(var i=0;i<a.tBodies[0].rows.length;i++){//将元素推入数组
+				newarr[i]=a.tBodies[0].rows[i];
+			}
+			newarr.sort(function(one,two){//运用数组的sort方法并设置比较函数
+				var n1=parseInt(one.cells[1].innerHTML);
+				var n2=parseInt(two.cells[1].innerHTML);
+				return n1-n2;
+			});
+			for(var i=0;i<newarr.length;i++){//将比较后的数组从尾部开始从小到大输出（可以添加alert来直观的看效果）
+				a.tBodies[0].appendChild(newarr[i]);
+			}
+		}
+//以上代码是按age大小顺序排列表格的每一行
+	}
+</script>
+</head>
+<body>
+	Name<input type="text" id="t1" />
+	Age<input type="text" id="t2" />
+	Number<input type="text" id="t3" />
+	<input type="button" id="add" value="Add" /></br>
+	Search<input type="text" id="t4" />
+	<input type="button" id="search" value="Search" /></br>
+	<input type="button" id="array" value="Array in age" />
+	<table width="400" id="a">
+		<thead style="font-size:20px;height:30px;line-height:30px;text-align:center;background:blue;">
+			<td>Name</td>
+			<td>Age</td>
+			<td>Number</td>
+			<td>Operation</td>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Quala</td>
+				<td>18</td>
+				<td>20</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Tata</td>
+				<td>22</td>
+				<td>56</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Quala</td>
+				<td>18</td>
+				<td>20</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Tata</td>
+				<td>22</td>
+				<td>56</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Quala</td>
+				<td>18</td>
+				<td>20</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Tata</td>
+				<td>22</td>
+				<td>56</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Quala</td>
+				<td>18</td>
+				<td>20</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Tata</td>
+				<td>22</td>
+				<td>56</td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

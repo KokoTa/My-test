@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>methods</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/index.css">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+
+</head>
+<body>
+	<h1>methods</h1>
+	<hr>
+
+	<div id="app">
+		{{a}}
+		<button @click="add">+</button>
+		<btn @click.native="add"></btn><!-- native,借用本地方法，即app->methods->add方法 -->
+	</div>
+	<br>
+	<button onclick="add()">外部访问构造器内的事件1</button>
+	<button onclick="app.add()">外部访问构造器内的事件2</button>
+
+	<!-- 
+	五种修饰符：
+	借用本地方法,:click.native
+	阻止单机事件冒泡，:click.stop
+	提交事件不重载页面，:submit.prevent
+	添加事件监听器时使用事件捕获模式，:click.capture
+	只当事件在该元素本身触发时（而不是子元素）才触发回调，:click.self
+	这些修饰符是可以串联的，:click.stop.prevent 
+	-->
+
+	<script type="text/javascript">
+		function add(){
+			app.a ++;
+		}
+
+		var btn = {//模板不能传属性，要在运用时再加,见上
+			template:'<button>外部组件</button>'
+		}
+		var app = new Vue({
+			el:'#app',
+			data:{
+				a:1
+			},
+			methods:{
+				add:function(event){
+					console.log(event);
+					this.a++;
+				}
+			},
+			components:{
+				'btn':btn
+			}
+		});
+	</script>
+</body>
+</html>

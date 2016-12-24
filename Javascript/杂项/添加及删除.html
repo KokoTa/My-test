@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+<script type="text/javascript">
+window.onload = function(){
+	var a = document.getElementById('a');
+	var i = a.getElementsByTagName('input')[0];
+	var t = a.getElementsByTagName('input')[1];
+
+	i.onclick=function(){
+		var ad = document.createElement('li');
+		var l = a.getElementsByTagName('li');
+		a.insertBefore(ad,l[0]);
+		ad.innerHTML= t.value;
+	}
+
+
+	var get = a.getElementsByTagName('a');
+	for(var i=0;i<get.length;i++){
+		get[i].onclick=function(){
+			a.removeChild(this.parentNode);//这里的this指的是get[i]，即<a>标签
+		}
+	}
+	
+}
+
+</script>
+</head>
+<body>
+<div id="a">
+	<input type="button" value="Add"/>
+	<input type='text'/>
+	<li><a href="javascript:;">a</a></li>
+	<li><a href="javascript:;">a</a></li>
+	<li><a href="javascript:;">a</a></li>
+	<li><a href="javascript:;">a</a></li>
+	<li><a href="javascript:;">a</a></li>
+</div>
+</body>
+</html>

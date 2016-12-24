@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<script type="text/javascript">
+window.onload=function(){
+  var one = document.getElementsByTagName('div')[0];
+  one.onmousedown = function(event){
+  	var event = event||window.event;
+  	var x = event.clientX - one.offsetLeft;//获得鼠标与div边界间的距离
+  	var y = event.clientY - one.offsetTop;
+  	document.onmousemove = function(event){
+  		var left = event.clientX - x;//将鼠标坐标-这一小撮间距=div的坐标
+  		var top = event.clientY - y;
+  		
+  		
+  		if(left<0){
+  			left = 0;
+  		}if(top<0){
+  			top = 0;
+  		}if(left>document.documentElement.scrollWidth-one.offsetWidth){//网页宽度-div宽度
+  			left = document.documentElement.scrollWidth-one.offsetWidth;
+  		}if(top>document.documentElement.scrollHeight-one.offsetHeight){//网页高度-div高度
+  			top = document.documentElement.scrollHeight-one.offsetHeight;
+  		}
+  		one.style.left = left +'px';
+  		one.style.top = top +'px';
+  	}
+  	document.onmouseup = function(event){
+  		document.onmousemove = null;//消除move
+  		document.onmouseup = null;//消除up，释放内存
+  	}
+  	return false;//防止火狐的Bug
+  }
+  //有缺陷，拖动时滑动滚轮会有问题
+}
+</script>
+<style type="text/css">
+	div{width: 100px;height: 100px;position: absolute;background: red;}
+</style>
+<body style="height:1000px;">
+<div></div>
+</body>
+</html>

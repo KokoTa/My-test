@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>实例方法</title>
+	<link rel="stylesheet" type="text/css" href="../assets/css/index.css">
+	<script type="text/javascript" src="../assets/js/vue.js"></script>
+
+</head>
+<body>
+	<h1>实例方法</h1>
+	<hr>
+
+	<div id="app">
+		
+	</div>
+	<button onclick="update()">更新</button>
+	<button onclick="change()">修改</button>
+	<button onclick="clears()">卸载</button>
+
+	<script type="text/javascript">
+		var header = Vue.extend({
+			template:'<p>{{message}}</p>',
+			data:function(){
+				return{
+					message:'Hello Extend!'
+				}
+			},
+			//10个生命周期
+			beforeCreate:function(){
+				console.log('1-beforeCreate 初始化之后,数据部署');
+			},
+			created:function(){
+				console.log('2-created 创建完成，组件加载完毕');
+			},
+			beforeMount:function(){
+				console.log('3-beforeMount 挂载之前,创建虚拟DOM');
+			},
+			mounted:function(){
+				console.log('4-mounted 挂载之后,载入虚拟DOM');
+			},
+			beforeUpdate:function(){
+				console.log('5-beforeUpdate 数据更新前');
+			},
+			updated:function(){
+				console.log('6-updated 数据更新后');
+			},
+			//<keep-alive></keep-alive>
+			activated:function(){
+				console.log('7-activated');
+			},
+			deactivated:function(){
+				console.log('8-deactivated');
+			},
+			beforeDestroy:function(){
+				console.log('9-beforeDestroy 销毁之前');
+			},
+			destroyed:function(){
+				console.log('10-destroy 销毁之后');
+			}
+		})
+
+		var app = new header().$mount('#app');//$mount挂载
+		function clears(){
+			app.$destroy();//$destroy,解绑
+		}
+		function update(){
+			app.$forceUpdate();//$forceUpdate,更新
+		}
+		function change(){
+			app.message = "Text changed!";
+			app.$nextTick(function(){//$nextTick,更新后回调
+				console.log('我是更新数据后的回调');
+			})
+		}
+	</script>
+</body>
+</html>

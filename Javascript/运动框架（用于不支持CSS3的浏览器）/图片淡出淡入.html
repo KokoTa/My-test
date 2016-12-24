@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+<script type="text/javascript">
+	window.onload=function(){
+		var a = document.getElementById('a');//获得图片
+		var time =null;//设置一个变量放入定时器
+		var speed=0;//初始化数值变量
+		var x=30;//由于无法直接获得opacity的值因此用一个变量来表示它的值（重点），这个值为CSS设置中的透明度
+		function move(target){//target为想要设置的透明度
+			clearInterval(time);//惯例先关闭定时器
+			time=setInterval(function(){
+				if(x<target){
+					speed=10;
+				}else{
+					speed=-10;
+				}
+				if(x==target){
+					clearInterval(time);
+				}else{
+					x+=speed;
+					a.style.filter='alpha(opacity:'+x+')';//IE情况下的代码
+					a.style.opacity=x/100;//Chrome和火狐下的代码
+				}
+			},30)
+		}
+		a.onmouseover=function(){
+			move(100);
+		}
+		a.onmouseout=function(){
+			move(30);
+		}
+	}
+</script>
+<style type="text/css">
+	img{filter:alpha(opacity:30);opacity: 0.3;}
+</style>
+</head>
+<body>
+<img src="1.jpg" id="a">
+</body>
+</html>

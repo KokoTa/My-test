@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas七巧板</title>
+</head>
+<body>
+	<canvas id="draw"></canvas>
+</body>
+<script type="text/javascript">
+	var draw = document.getElementById('draw');
+	draw.width = 800;
+	draw.height = 800;
+	var context = draw.getContext('2d');
+	var shelf = [	
+	{
+		p:[{x:0,y:0},{x:800,y:0},{x:400,y:400}],
+		color:"#caff67"//其中一块七巧板，一个记录画图方法，一个记录颜色
+	},
+	{
+		p:[{x:0,y:0},{x:400,y:400},{x:0,y:800}],
+		color:"#67becf"
+	},
+	{
+		p:[{x:800,y:0},{x:800,y:400},{x:600,y:600},{x:600,y:200}],
+		color:"#ef3d61"
+	},
+	{
+		p:[{x:600,y:200},{x:600,y:600},{x:400,y:400}],
+		color:"#f9f51a"
+	},
+	{
+		p:[{x:400,y:400},{x:600,y:600},{x:400,y:800},{x:200,y:600}],
+		color:"#a594c0"
+	},
+	{
+		p:[{x:200,y:600},{x:400,y:800},{x:0,y:800}],
+		color:"#fa7ecc"
+	},
+	{
+		p:[{x:800,y:400},{x:800,y:800},{x:400,y:800}],
+		color:"#f6ca29"
+	}
+	];
+	for(var i=0;i<shelf.length;i++){
+		paint(shelf[i],context);
+	}
+	function paint(one,context){
+		
+		context.beginPath();//绘制路径用begin和close抱起来
+		context.moveTo(one.p[0].x,one.p[0].y);
+		for(var i=1;i<one.p.length;i++){
+			context.lineTo(one.p[i].x,one.p[i].y);
+		}
+		context.closePath();
+
+		context.lineWidth = 5;
+
+		context.fillStyle = one.color;//画图先填充后描边
+		context.fill();
+
+		context.strokeStyle = "black";
+		context.stroke();
+
+
+
+	
+		
+	}
+</script>
+</html>

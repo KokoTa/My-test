@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<script type="text/javascript">
+window.onload=function(){
+  var one = document.getElementsByTagName('div')[0];
+  one.onmousedown = function(event){
+  	var box = document.createElement('div');
+    box.className = 'box';
+    box.style.height = one.offsetHeight +'px';
+    box.style.width = one.offsetWidth +'px';
+    box.style.left = one.offsetLeft +'px';
+    box.style.top = one.offsetTop+'px';
+    document.body.appendChild(box);
+
+    var event = event||window.event;
+  	var x = event.clientX - one.offsetLeft;
+  	var y = event.clientY - one.offsetTop;
+
+  	document.onmousemove = function(event){
+  		var left = event.clientX - x;
+  		var top = event.clientY - y;
+  		box.style.left = left +'px';
+  		box.style.top = top +'px';
+  	}
+
+  	document.onmouseup = function(event){
+  		this.onmousemove = null;
+  		this.onmouseup = null;
+      one.style.left = event.clientX - x +'px';
+      one.style.top = event.clientY - y+'px';
+      this.body.removeChild(box);
+
+  	}
+
+  	return false;
+  }
+}
+</script>
+<style type="text/css">
+	div{width: 100px;height: 100px;position: absolute;background: red;}
+  .box{position: absolute;border: 1px solid black;background: none;}
+</style>
+<body style="height:1000px;">
+<div></div>
+</body>
+</html>
