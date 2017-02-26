@@ -1,0 +1,52 @@
+东航 520131414
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+流动布局 container-fluid
+图片自适应 img-responsive
+文本剧中 text-center
+button按钮风格 btn
+按钮填满页面整个空间 btn-block
+深蓝色 btn-primary
+浅蓝色 btn-info
+红色   btn-danger
+白     btn-default
+.text-muted：提示，使用浅灰色（#999）
+.text-primary：主要，使用蓝色（#428bca）
+.text-success：成功，使用浅绿色(#3c763d)
+.text-info：通知信息，使用浅蓝色（#31708f）
+.text-warning：警告，使用黄色（#8a6d3b）
+.text-danger：危险，使用褐色（#a94442）
+
+响应式网格布局 前提是都放在一个div中 class为row 每个元素也都用div包起来
+col-md-*   md表示medium(中等的)，*代表一个数字，它指定了这个元素所占的列宽,笔记本电脑
+col-sm-	   小屏幕 平板 (≥768px)
+col-xs-4   xs是extra small缩写，应用于较小的屏幕，比如手机屏幕
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+Font Awesome图标库
+fa fa-thumbs-up。
+fa fa-info-circle
+fa fa-trash
+form-control
+fa-paper-plane 
+
+深度感  well
+
+Animated动画 用JQ的addClass
+animated shake/bouce/fadeOut/hin(旋转)
+
+JQuery
+.prop()的方法让你来调整元素的属性
+.html()方法可以添加HTML标签和文字到元素，区别于. text()
+.remove() 的方法可以移除HTML元素
+.appendTo()方法可以把选中的元素加到其他元素中。
+.clone()方法可以拷贝元素
+.parent()，它允许你访问指定元素的父元素。
+.children(),子元素集合
+.XXX:nth-child(n),按照索引顺序(从1开始)选择目标元素的所有子元素。
+.XXX:odd 选索引为奇数，even选索引为偶数
+
+.thumbnail缩略图
+.jumbotron带margin的大容器灰色背景，增加标题的大小
+
+
+github预览
+http://htmlpreview.github.com/?

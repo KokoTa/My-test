@@ -1,0 +1,67 @@
+1.Ajax主要的功能是实现了浏览器端 异步 访问服务器：通过浏览器的XMLHttpRequest对象发出小部分数据，与服务端进行交互，
+
+服务端返回小部分数据，然后更新客户端的部分页面。
+
+2.json是Ajax发送小部分数据的一种轻量级数据格式，可以简单易懂的给服务器或者浏览器交互数据，包括jason对象，jason数组对象。
+
+3.跨域的原理是：协议://子域名.主域名:端口号/服务端地址，除了服务端地址的改变叫做重定向意外，其他几个可变更的参数中任意一个的改变就叫做跨域。
+
+
+
+
+4.域名地址构成：
+协议：http://
+子域名：www
+主域名：abc.com
+端口号：8080
+请求资源地址：scripts/jquery.js
+
+跨域：当不同域之间相互请求资源时
+如：www.abc.com/index.html 请求 www.efg.com/service.php
+
+事实上HTTP和HTTPS两个协议的url看上去都可以省略端口号，但是他们访问的默认端口不同
+
+HTTP默认访问80端口
+
+HTTPS默认访问443端口
+
+所以http访问https肯定是跨域
+
+
+
+
+
+
+5.跨域处理:
+
+处理跨域方法一——代理
+通过在同域名的web服务器端创建一个代理：
+北京服务器（域名：www.beijing.com）
+上海服务器（域名：www.shanghai.com）
+比如在北京的web服务器的后台
+（www.beijing.com/proxy-shanghaiservice.php）来调用上海服务器
+（www.shanghai.com/service.php）的服务，然后再把响应结果返回给前端，这样前端调用北京同域名的服务就和调用上海的服务效果相同了。
+
+
+
+
+
+
+
+处理跨域方法二   -------- JSONP,只能解决get请求跨域，前后台都要更改，不支持post请求
+Datatype：”jsonp”,
+Jsonp:”callback”，----callback可以使其他参数，后台要获取
+a域名声明,b域名调用
+
+
+
+
+
+
+处理跨域方法三——XHR2
+XHR2：HTML5提供的XMLHttpRequest Level2已经实现了跨域访问以及其他的一些新功能
+IE10以下版本浏览器不支持
+用法：
+在服务器端<?php?>（后端为PHP）语句中增加设置即可：
+1、header('Access-Control-Allow-Origin:*'); “*”表示支持所有域名，也可以设置特定的域名
+2、header('Access-Control-Allow-Methods:Post/Get');表示请求是post还是get

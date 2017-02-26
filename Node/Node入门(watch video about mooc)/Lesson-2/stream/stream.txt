@@ -1,0 +1,7 @@
+Stream的种类
+1. Readable (可读流) pause, resume
+2. Writable (可写流)
+3. Duplex   (双工流)
+4. Transform (转换流) 可读可写, 不保存数据, 处理流经的数据
+
+Pipe只是个只传输不保存的水管.

@@ -1,0 +1,27 @@
+什么是buffer:
+Buff是js用来处理二进制编码的缓存区域。 
+new Buff('hello 慕课网');  //默认是UTF-8编码格式
+ new Buff('hello','base64');  //指定编码格式
+var buf = new Buff(8);  //指定buff长度，超过则超过不缓存
+var buf = new Buff(7); buf.write('12345678');  //输出1234567的编码
+var buf = new Buff([1,2,3.11,4]);  //输出为01,02,03,04
+//可以通过数组形式访问
+buf[1];   //2
+
+
+
+
+buffer对象属性、方法：
+poolSize:内存载体的容量
+isBuffer:是否为buffer类型对象
+compare:用来判断两个buffer对象的相对位置
+isEncoding:判断nodejs是否支持某种编码
+concat:将几个buffer对象连接创建一个新的buffer对象
+byteLength:获得指定编码下字符串所占的字节数
+
+
+
+
+
+注意：
+new Buffer()现在已经废弃了。用Buffer.alloc(size)   Buffer.from(str)代替

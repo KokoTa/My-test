@@ -1,0 +1,229 @@
+url,querystring:
+1.url,parse('url',false,false);//解析一个网址，返回一个对象，第二个参数如果为true,则对象中的query为一个对象，第三个参数如果为true，将智能识别不完整的url。
+2.url.format('url')；//解析一个对象，返回一个网址
+3.url.resolve('url1','url2');//连接两个url，返回一个新网址
+4.querystring.stringfy('对象','键值对分隔符','键值分隔符');//序列化对象
+5.querystring.parse('字符串','键值对分隔符','键值分隔符','键值对长度的限制');//解析为对象,
+6.querystring.escape('字符串');//转义
+7.querystring.unescape('编码');//反转义
+
+
+
+       			url.parse(string).query
+                                           |
+           url.parse(string).pathname      |
+                       |                   |
+                       |                   |
+                     ------ -------------------
+http://localhost:8888/start?foo=bar&hello=world
+                                ---       -----
+                                 |          |
+                                 |          |
+              querystring(string)["foo"]    |
+                                            |
+                         querystring(string)["hello"]
+
+
+
+
+
+
+
+
+
+HTTP概念基础：
+1.首先,是对imooc.com域名解析，
+(1.1)浏览器搜索浏览器自身的DNS缓存。chrome://net-internals/#dns
+(1.2)如果浏览器没有找到自身的DNS缓存或之前的缓存已失效，那么浏览器会搜索操作系统自身的DNS缓存。
+(1.3)如果操作系统的DNS缓存也没有找到，那么系统会尝试在本地的HOST文件去找。
+(1.4)如果在HOST里依然没有找到，浏览器会发起一个DNS的系统调用，即一般向本地的宽带运营商发起域名解析请求。这后面又可以试情况分很多步骤，第一，宽带运营商服务器会首先查看自身的缓存，看是否有结果，如果没有，那么运营商服务器会发起一个迭代DNS解析请求（根域，顶级域，域名注册商），最终会返回对DNS解析的结果。运营商服务器然后把结果返回给操作系统内核（同时也缓存在自己的缓存区），然后操作系统把结果返回给浏览器。
+(1.5)以上的最终结果，是让浏览器拿到imooc.com的IP地址，DNS解析完成。
+
+2.然后,在浏览器获得域名的IP地址后，发起“三次握手”，建立TCP/IP连接。
+
+3.在TCP/IP连接建立起来后，浏览器就可以向服务器发送HTTP请求了。比如，用HTTP的GET方法请求一个根域里的某个域名，协议可以采用HTTP 1.0 。
+
+4.服务器端接受这个请求，根据路径参数，经过后端的一些处理之后，把处理后的一个结果以数据的形式返回给浏览器，如果是imooc.com网站的页面，服务器就会把完整的HTML页面代码返回给浏览器。
+
+5.浏览器拿到了imooc.com这个网站的完整HTML页面代码，在解析和渲染这个页面的时候，里面的Javascript、CSS、图片等静态资源，它们同样也是一个个HTTP请求，都需要经过上面的步骤来获取。
+
+6.浏览器根据拿到的资源对页面进行渲染，最终把一个完整的页面呈现出来。
+
+
+
+
+
+
+
+
+
+控制台Timing：
+http请求方法 GET获取读取数据  POST提交资源   PUT更新  DELETE删除资源 HEAD头信息
+请求状态码status code ： 
+1XX表示请求已经接受正在处理，
+2XX请求接受，已经处理完毕 ，
+3XX重定向 
+4XX 有语法错误，客户端错误 
+5XX 服务器端的错误    
+200 客服端请求成功 
+400 客户端请求语法错误 
+401 请求没有经过授权 
+403 拒绝提供服务 是因为没有权限等等  
+404 没找到 有可能输入的URL地址错误  
+500 服务器 发生错误  
+503 服务器端当前还不能处理客户端请求  可能需要过一段时间
+Stalled： 等待时机,浏览器要发生请求,到能发出请求的时间。不包括DNS查询和连接建立时间
+Proxy negotiation： 代理协商的时间
+Request sent 请求时间。从请求报文的第一个字节发出，到最后一个字节发送完毕的时间
+Waiting(TTFB) 请求发出后至收到第一个字节响应的时间
+Content Download 从接收到响应第一个字节开始到最后一个字节结束花费的时间
+
+
+
+
+
+
+
+
+HTTP概念进阶
+1. 什么是回调？
+回调是异步编程时的基础，将后续逻辑封装成起始函数的参数，逐层嵌套
+2. 什么是同步/异步？
+同步是指：发送方发出数据后，等接收方发回响应以后才发下一个数据包的通讯方式。  
+异步是指：发送方发出数据后，不等接收方发回响应，接着发送下个数据包的通讯方式。  
+3. 什么是I/O？
+磁盘的写入（in）磁盘的读取（out）
+4. 什么的单线程/多线程？
+一次只能执行一个程序叫做单线程
+一次能执行多个程序叫多线程
+5. 什么是阻塞/非阻塞？
+阻塞：前一个程序未执行完就得一直等待,是一种状态的描述
+非阻塞：前一个程序未执行完时可以挂起，继续执行其他程序，等到使用时再执行
+6. 什么是事件？
+一个触发动作（例如点击按钮）
+7. 什么是事件驱动？
+一个触发动作引起的操作（例如点击按钮后弹出一个对话框）
+8. 什么是基于事件驱动的回调？
+为了某个事件注册了回调函数，但是这个回调函数不是马上执行，只有当事件发生的时候，才会调用回调函数，这种函数执行的方式叫做事件驱动~这种注册回调就是基于事件驱动的回调，如果这些回调和异步I/O(数据写入、读取)操作有关，可以看作是基于回调的异步I/O，只不过这种回调在nodejs中是有事件来驱动的
+9. 什么是事件循环？
+事件循环Eventloop,倘若有大量的异步操作，一些I/O的耗时操作，甚至是一些定时器控制的延时操作，它们完成的时候都要调用相应的回调函数，从而来完成一些密集的任务，而又不会阻塞整个程序执行的流程，此时需要一种机制来管理，这种机制叫做事件循环.
+总而言之就是：管理大量异步操作的机制叫做事件循环
+
+Event Loop:
+回调函数队列。异步执行的函数会被压入这个队列; 队列被循环查询。
+
+
+
+
+
+
+
+
+
+
+作用域与上下文：
+作用域：与调用函数,访问变量的能力有关 作用域分为：局部和全局（在局部作用域里可以访问到全局作用域的变量，但在局部作用域外面就访问不到局部作用里面所设定的变量）
+
+上下文：与this关键字有关 是调用当前可执行代码的引用
+       this总是指向调用这个的方法的对象
+js里的this 通常是当前函数的拥有者
+this 是js的一个关键字 代表函数运行时自动生成的一个内部对象 只能在函数内部使用
+
+1.作为对象的方法 
+this在方法内部，this就指向调用这个方法的对象
+2.函数的调用
+this指向执行环境中的全局对象（浏览器->window  nodejs->global）
+3.构造函数
+this所在的方法被实例对象所调用，那么this就指向这个实例对象
+
+更改上下文方法(更改this指向的内容,可方便地实现继承)：
+	call(list);
+	apply(array);
+根据call()、apply()改变上下文this指向的特性,也可以方便实现继承
+
+
+
+
+
+
+
+
+
+
+Apache ab测试：
+需要在D:\Program Files (x86)\wamp\bin\apache\Apache2.2.21\bin环境中运行Bash
+对serve.js测试，执行代码：./ab -n1000 -c10 http://127.0.0.1:2016/
+对慕课网进行测试，执行代码：./ab -n1000 -c10 http://www.imooc.com/
+
+Apache ab常用命令：
+ab [options] [http://]hostname[:port]/path
+ab常用参数(option)的介绍：
+-n ：总共的请求执行数，缺省是1
+-c： 并发数，缺省是1
+-t：测试所进行的总时间，秒为单位，缺省50000s
+-p：POST时的数据文件
+-w: 以HTML表的格式输出结果
+
+
+
+
+
+
+
+Events,事件监听简介：
+a.EventEmitter支持多个事件监听，最大为10，也可以自定义最大数
+//添加监听
+var EventEmitter = require('events').EventEmitter;
+var instance = new EventEmitter();
+instance.on('event',function(arguments){});
+
+
+b.如果超过十个也能执行，不过有可能会造成内存泄漏
+//自定义最大数
+//每个setMaxListeners针对的是一个特定事件：即event1,event2,... 默认最大都为10,本例为num
+instance.setMaxListeners(num);
+
+
+c.事件监听之后，需要emit(发射,发出)才会执行
+instance.emit('event',arguments)
+
+
+d.判断是否监听
+boolean instance.emit('event',arguments)	//true or false
+
+
+e.移除监听事件
+//移除单个事件监听
+instance.removeListener('event',funcName)	//移除事件需具名函数，匿名函数不行
+//移除多个事件监听
+instance.removeAllListerner()	//不传参表示移除所有事件监听
+instance.removeAllListerner('event')	//移除特定event的所有事件监听
+
+
+f.计算事件监听数量
+//第一种
+instance.listeners('event').length
+//第二种
+EventEmitter.listenerCount(instance,'event')
+
+
+
+
+
+
+
+
+HTTP - get / request：
+http的api里面get就是对request的封装， get能做的request都能做
+http.request(options,[callback])
+
+host:主机名
+hostname:host别名
+port: 端口号（8080）
+localAddress:绑定本地连接的接口
+method: http请求的字符串（get） 
+path:请求的根路径 /
+headers:请求头的对象
+auth:计算认证头的基本认证
+agent:控制agent行为
+keepAlive:保存资源池周围套接字在未来能继续用于其他请求（false）
