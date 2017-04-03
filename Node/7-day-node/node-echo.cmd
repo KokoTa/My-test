@@ -1,0 +1,1 @@
+@node "F:\Github\Program\My-test\Node\7-day-node\lib\node-echo.js" %*

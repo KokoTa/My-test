@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>markdown</title>
+	<script src="https://unpkg.com/vue/dist/vue.js"></script>
+	<script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
+	<script src="./node_modules/marked/lib/marked.js"></script>
+	<link rel="stylesheet" type="text/css" href="./index.css">
+</head>
+<body>
+	<div id="app">
+		<textarea :value="input" @input="update"></textarea>
+		<div v-html="compile"></div>
+	</div>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el: '#app',
+			data: {
+				input: '# Hello World'
+			},
+			methods: {
+				update: _.debounce(function(e) {
+					this.input = e.target.value
+				}, 500)
+			},
+			computed: {
+				compile: function() {
+					return marked(this.input, {sanitize: true})//忽略传入的HTML标签
+				}
+			}
+		})
+	</script>
+</body>
+</html>

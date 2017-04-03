@@ -1,0 +1,21 @@
+#app{
+  widows: 100%;
+  height: 800px;
+  display: flex;
+}
+
+#app div,textarea{
+  width: 49%;
+  padding: 20px;
+}
+
+#app div{
+  overflow: auto;
+}
+
+textarea{
+  outline: none;
+  border: 0;
+  background: #123;
+  color: #fff;
+}

@@ -1,0 +1,6 @@
+.v-enter,.v-leave-active{
+	opacity:0;
+}
+.v-enter-active,.v-leave-active{
+	transition: all 1s ease;
+}

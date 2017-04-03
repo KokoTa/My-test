@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Firebase Test</title>
+	<!-- Vue -->
+	<script src="https://unpkg.com/vue/dist/vue.js"></script>
+	<!-- Firebase -->
+	<script src="https://gstatic.com/firebasejs/3.5.2/firebase.js"></script>
+	<!-- VueFire -->
+	<script src="https://unpkg.com/vuefire/dist/vuefire.js"></script>
+	<script>
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: "AIzaSyBBtJHFeRV0fyLbM6q4FnIZijRHmD4kBrI",
+	    authDomain: "fir-test-546d3.firebaseapp.com",
+	    databaseURL: "https://fir-test-546d3.firebaseio.com",
+	    projectId: "fir-test-546d3",
+	    storageBucket: "fir-test-546d3.appspot.com",
+	    messagingSenderId: "904064204195"
+	  };
+	  firebase.initializeApp(config);
+	</script>
+	<link rel="stylesheet" type="text/css" href="./index.css">
+</head>
+<body>
+	<div id="app">
+		<ul is="transition-group">
+			<li v-for="user in users" class="user" :key="user['.key']">
+				<span>{{user.name}} - {{user.email}}</span>
+				<button @click="removeUser(user)">X</button>
+			</li>
+		</ul>
+		<form id="form" @submit.prevent="addUser">
+			<input type="text" name="name" v-model="newUser.name" placeholder="Username">
+			<input type="email" name="email" v-model="newUser.email" placeholder="Useremail">
+			<input type="submit" name="add" value="Add User">
+		</form>
+		<ul class="errors">
+			<li v-show="!validation.name">Name cannot be empty</li>
+			<li v-show="!validation.email">Please provide a valid email address</li>
+		</ul>
+	</div>
+
+	<script type="text/javascript">
+		var emailRE = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+		var usersRef = firebase.database().ref('users')
+		var app = new Vue({
+			el: '#app',
+			data: {
+				newUser: {
+					name: '',
+					email: ''
+				}
+			},
+			// firebase binding
+			// https://github.com/vuejs/vuefire
+			// users用于HTML
+			firebase: {
+				users: usersRef
+			},
+			// computed property for form validation state
+			computed: {
+				validation: function() {
+					return {
+						name: !!this.newUser.name.trim(),
+						email: emailRE.test(this.newUser.email)
+					}
+				},
+				isValid: function () {
+					var validation = this.validation
+					//都为true才能提交
+					return Object.keys(validation).every(function(key){
+						return validation[key]
+					})
+				}
+			},
+			methods: {
+				addUser: function() {
+					if(this.isValid) {
+						usersRef.push(this.newUser)
+						this.newUser.name = ''
+						this.newUser.email = ''
+					}
+				},
+				removeUser: function(user) {
+					usersRef.child(user['.key']).remove()
+				}
+			}
+		})
+	</script>
+</body>
+</html>
