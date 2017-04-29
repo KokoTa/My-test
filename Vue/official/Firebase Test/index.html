@@ -25,19 +25,19 @@
 </head>
 <body>
 	<div id="app">
-		<ul is="transition-group">
+		<ul is="transition-group"><!--transition-group多个元素/组件的过渡效果-->
 			<li v-for="user in users" class="user" :key="user['.key']">
 				<span>{{user.name}} - {{user.email}}</span>
 				<button @click="removeUser(user)">X</button>
 			</li>
 		</ul>
-		<form id="form" @submit.prevent="addUser">
+		<form id="form" @submit.prevent="addUser"><!--prevent禁用跳转-->
 			<input type="text" name="name" v-model="newUser.name" placeholder="Username">
 			<input type="email" name="email" v-model="newUser.email" placeholder="Useremail">
 			<input type="submit" name="add" value="Add User">
 		</form>
 		<ul class="errors">
-			<li v-show="!validation.name">Name cannot be empty</li>
+			<li v-show="!validation.name">Name cannot be empty</li><!--v-model绑定值，同时出发验证-->
 			<li v-show="!validation.email">Please provide a valid email address</li>
 		</ul>
 	</div>
@@ -68,6 +68,8 @@
 					}
 				},
 				isValid: function () {
+					console.log(usersRef)
+					console.log(this.users)
 					var validation = this.validation
 					//都为true才能提交
 					return Object.keys(validation).every(function(key){

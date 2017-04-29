@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Rebound header</title>
+	<script src="https://unpkg.com/vue/dist/vue.js"></script>
+	<script src="https://unpkg.com/dynamics.js@1.1.5"></script>
+	<style type="text/css">
+		h1 {
+		  font-weight: 300;
+		  font-size: 1.8em;
+		  margin-top: 0;
+		}
+
+		.draggable-header-view {
+		  background-color: #fff;
+		  box-shadow: 0 4px 16px rgba(0,0,0,.15);
+		  width: 320px;
+		  height: 560px;
+		  overflow: hidden;
+		  margin: 30px auto;
+		  position: relative;
+		  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+		  font-size: 14px;
+		  font-weight: 300;
+		  -webkit-user-select: none;
+		  -moz-user-select: none;
+		  -ms-user-select: none;
+		  user-select: none;
+		}
+		.draggable-header-view .bg {
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  z-index: 0;
+		}
+		.draggable-header-view .header, .draggable-header-view .content {
+		  position: relative;
+		  z-index: 1;
+		  padding: 30px;
+		  box-sizing: border-box;
+		}
+		.draggable-header-view .header {
+		  height: 160px;
+		}
+		.draggable-header-view .content {
+		  color: #333;
+		  line-height: 1.5em;
+		}
+	</style>
+</head>
+<body>
+	<!--template-->
+	<script type="text/-template" id="header-view-template">
+		<div class='draggable-header-view'
+			@mousedown='startDrag' @touchstart='startDrag'
+			@mousemove='onDrag' @touchmove='onDrag'
+			@mouseup='stopDrag' @touchend='stopDrag'
+			@mouseleave='stopDrag'
+		>
+			<!--容器与SVG大小相同,随拖动改变-->
+			<svg class='bg' width='320' height='560'>
+				<path :d='headerPath' fill='#3F51B5'></path>
+			</svg>
+			<div class='header'>
+				<slot name='header'></slot>
+			</div>
+			<!--随着拖动改变内容的位置-->
+			<div class='content' :style='contentPosition'>
+				<slot name='content'></slot>
+			</div>
+		</div>
+	</script>
+	
+	<!--body-->
+	<!--touchmove.prevent 防止滑动时页面滑动-->
+	<div id="demo" @touchmove.prevent>
+		<draggable>
+			<template slot='header'>
+				<h1>Elastic Draggable SVG Header</h1>
+				<p>with <a href="http://vuejs.org">Vue.js</a> + <a href="http://dynamicsjs.com">dynamics.js</a></p>
+			</template>
+			<template slot='content'>
+				<p>Note this is just an effect demo - there are of course many additional details if you want to use this in production, e.g. handling responsive sizes, reload threshold and content scrolling. Those are out of scope for this quick little hack. However, the idea is that you can hide them as internal details of a Vue.js component and expose a simple Web-Component-like interface.</p>
+			</template>
+		</draggable>
+	</div>
+
+	<script type="text/javascript">
+	Vue.component('draggable', {
+		template: '#header-view-template',
+		data: function () {
+			return {
+				dragging: false,
+				c: {// 二次贝塞尔控制点
+					x: 160,
+					y: 160
+				},
+				start: {// 拖动点
+					x: 0,
+					y: 0
+				}
+			}
+		},
+		computed: {
+			headerPath: function () { // 设置贝塞尔控制点
+				return 'M 0 0 L 320 0, 320 160' + 'Q ' + this.c.x + ' ' + this.c.y + ', ' + '0 160'
+			},
+			contentPosition: function () { // 设置文本位置
+				var dy = this.c.y - 160; // 偏移量， 从0开始
+				var dampen = dy > 0 ? 2 : 4; // 弹性系数
+				return {
+					transform: 'translateY(' + dy / dampen + 'px)'
+				}
+			}
+		},
+		methods: {
+			startDrag: function (e) { // 获得起始点
+				console.log(e.cahngedTouches)
+				e = e.changedTouches ? e.changedTouches[0] : e // 判断是否发生触摸改变
+				this.dragging = true
+				this.start.x = e.pageX
+				this.start.y = e.pageY
+			},
+			onDrag: function (e) {
+				e = e.changedTouches ? e.changedTouches[0] : e
+				if (this.dragging) { // 设置贝塞尔曲线拖动
+					var dy = e.pageY - this.start.y
+					var dampen = dy > 0 ? 1.5 : 4
+					this.c.y = dy / dampen + 160
+				}
+			},
+			stopDrag: function () {
+				if (this.dragging) {
+					this.dragging = false
+					dynamics.animate(this.c, {
+						x: 160, // 动画起始点
+						y: 160
+					}, {
+						type: dynamics.spring, // 类型： 弹弹弹
+						duration: 700, // 动画时间
+						friction: 280 // 摩擦力，理解为形变程度，越低形变越大
+					})
+				}
+			}
+		}
+	})
+
+		var demo = new Vue({
+			el: '#demo'
+		})
+	</script>
+</body>
+</html>

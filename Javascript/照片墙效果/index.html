@@ -146,7 +146,7 @@
 				doFn.call(obj); //将obj指向doFn后调用
 
 				var flag = false;//解决transitionend的Bug
-			 	obj.addEventListener('transitionend', function(){//这个事件有个BUG，只要出现一次对属性的赋值就会触发
+			 	obj.addEventListener('transitionend', function(){//这个事件有个BUG，出现一次对属性的赋值就会触发一次事件, 比如sacle会一次此事件， sacle+opacity就会出发两次
 			 		if(!flag){//只运行一次callback
 			 			callback&&callback.call(obj);//利用逻辑判断的特性，有赋值就执行后面的，没有就返回false
 			 			flag = true;

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>SVGExample</title>
+	<script src="https://unpkg.com/vue/dist/vue.js"></script>
+	<!--示例展示了一个结合体，它由常用组件、计算属性、2 种绑定方式和 SVG 的支持组成-->
+</head>
+<body>
+	<!--polygraph component-->
+	<script type="text/x-template" id="polygraph-template">
+		<g>
+			<polygon :points='points' fill='green'></polygon><!--锚点-->
+			<circle cx='100' cy='100' r='80' fill='transparent' stroke='gray'></circle><!--外圆-->
+			<axis-label
+				v-for='(stat, index) in stats'
+				:stat='stat'
+				:index='index'
+				:total='stats.length'>
+			</axis-label><!--锚点文本-->
+		</g>
+	</script>
+
+	<!--axis label component-->
+	<script type="text/x-template" id="axis-label-template">
+		<text :x='point.x' :y='point.y'>{{ stat.label }}</text><!--svg 的 text 标签-->
+	</script>
+
+	<!--body-->
+	<div id='demo'>
+		<!--use component-->
+		<svg width='200' height='200'>
+			<polygraph :stats='stats'></polygraph>
+		</svg>
+		<!--contorl panel-->
+		<div v-for='stat in stats'>
+			<label>{{ stat.label }}</label>
+			<input type="range" v-model='stat.value' min='0' max='100'>
+			<span>{{ stat.value }}</span>
+			<button @click='remove(stat)'>X</button>
+		</div>
+		<form id='add'>
+			<input type="text" name='newLabel' v-model='newLabel'>
+			<button @click='add'>Add a Stat</button>
+		</form>
+		<!--detail map-->
+		<pre id='raw'>{{ stats }}</pre>
+	</div>
+
+
+		<script type="text/javascript">
+			// raw data
+			var stats = [
+				{ label: 'A', value: 100 },
+				{ label: 'B', value: 100 },
+				{ label: 'C', value: 100 },
+				{ label: 'D', value: 100 },
+				{ label: 'E', value: 100 },
+				{ label: 'F', value: 100 }
+			]
+
+			// polygraph component
+			Vue.component('polygraph', {
+				props: ['stats'],
+				template: '#polygraph-template',
+				computed: {
+					// 图形路径点，返回一个路径字符串
+					points: function () {
+						var total = this.stats.length
+						return this.stats.map(function (stat, i) {
+							var point = valueToPoint(stat.value, i, total)
+							return point.x + ',' + point.y
+						}).join(' ')
+					}
+				},
+				components: {
+					// 锚点文本，返回一个坐标
+					'axis-label': {
+						props: {
+							stat: Object,
+							index: Number,
+							total: Number
+						},
+						template: '#axis-label-template',
+						computed: {
+							// 文本位置
+							point: function () {
+								return valueToPoint(+this.stat.value+10, this.index, this.total)
+							}
+						}
+					}
+				}
+			})
+
+			// Math helper 计算函数
+			function valueToPoint (value, index, total) {
+			  var x     = 0
+			  var y     = -value * 0.8
+			  var angle = Math.PI * 2 / total * index
+			  var cos   = Math.cos(angle)
+			  var sin   = Math.sin(angle)
+			  var tx    = x * cos - y * sin + 100
+			  var ty    = x * sin + y * cos + 100
+			  return {
+			    x: tx,
+			    y: ty
+			  }
+			}
+
+			// demo
+			var demo = new Vue({
+				el: '#demo',
+				data: {
+					newLabel: '',
+					stats: stats
+				},
+				methods: {
+					add: function (e) {
+						e.preventDefault() // 防止默认跳转
+						if (!this.newLabel) return
+						this.stats.push({
+							label: this.newLabel,
+							value: 100
+						})
+						this.newLabel = ''
+					},
+					remove: function (stat) {
+						if (this.stats.length > 3) {
+							this.stats.splice(this.stats.indexOf(stat), 1)
+						} else {
+							alert('Can\`t delete more!')
+						}
+					} 
+				}
+			})
+		</script>
+</body>
+</html>

@@ -37,14 +37,14 @@
 			el: '#app',
 			data: {
 				branches: ['master', 'dev'],
-				currentBranch: 'master',
+				currentBranch: 'master', // 默认值，checked
 				commits: null
 			},
-			created: function() {
+			created: function() { // 生命周期
 				this.fetchData()
 			},
 			watch: {
-				currentBranch: 'fetchData'//watch传入的是方法名
+				currentBranch: 'fetchData'//watch传入的是方法名，currentBranch改变就出发fetchData
 			},
 			filters: {
 				truncate: function(v) {

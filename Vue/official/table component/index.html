@@ -74,10 +74,10 @@
 			},
 			computed: {
 				filteredData: function() {
-					var sortKey = this.sortKey
-					var filterKey = this.filterKey && this.filterKey.toLowerCase()
-					var order = this.sortOrders[sortKey] || 1
-					var data = this.data
+					var sortKey = this.sortKey // 要排序的值（name or power）
+					var filterKey = this.filterKey && this.filterKey.toLowerCase() // 过滤字符
+					var order = this.sortOrders[sortKey] || 1 // 升降序
+					var data = this.data // 数据
 					if(filterKey) { //搜索过滤
 						data = data.filter(function(row) {
 							return Object.keys(row).some(function(key) {
