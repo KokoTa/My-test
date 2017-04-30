@@ -110,7 +110,7 @@
 				var dy = this.c.y - 160; // 偏移量， 从0开始
 				var dampen = dy > 0 ? 2 : 4; // 弹性系数
 				return {
-					transform: 'translateY(' + dy / dampen + 'px)'
+					transform: 'translate3d(0,' + dy / dampen + 'px,0)'
 				}
 			}
 		},
@@ -125,9 +125,11 @@
 			onDrag: function (e) {
 				e = e.changedTouches ? e.changedTouches[0] : e
 				if (this.dragging) { // 设置贝塞尔曲线拖动
+					this.c.x = 160 + (e.pageX - this.start.x) // 更新水平控制点位置
+					// dampen vertical drag by a factor
 					var dy = e.pageY - this.start.y
-					var dampen = dy > 0 ? 1.5 : 4
-					this.c.y = dy / dampen + 160
+					var dampen = dy > 0 ? 2 : 4
+					this.c.y = 160 + dy / dampen // 更新垂直控制点位置
 				}
 			},
 			stopDrag: function () {
