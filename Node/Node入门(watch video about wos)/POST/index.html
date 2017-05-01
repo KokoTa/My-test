@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Hello</title>
+</head>
+<body>
+	<form name="index" method="post" action="/post" >
+		Name: <input type="text" name="name" placeholder="name"><br>
+		Email: <input type="text" name="email" placeholder="emial"><br>
+		Address: <input type="text" name="address" placeholder="address"><br>
+		<input type="submit" value="提交">
+		<input type="reset" value="清空">
+	</form>
+	<br>
+	<form name="img" method="post" action="/postFile" enctype="multipart/form-data">
+		<input type="file" name="file">
+		<input type="submit" value="提交">
+	</form>
+</body>
+</html>
