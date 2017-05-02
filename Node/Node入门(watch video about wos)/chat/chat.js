@@ -7,7 +7,7 @@ var net = require('net') // 引入net模块
 var chatServer = net.createServer() // 建立服务器
 var clientList = [] // 用户数组
 
-chatServer.on('connection', function (client) { // 连接客户端
+chatServer.on('connection', function (client) { // 有客户端连接时触发
 	client.write('Hello World...\n\r') // 客户端输出, \r处理windows回车bug
 	// client.end() // 结束连接
 
@@ -23,7 +23,7 @@ chatServer.on('connection', function (client) { // 连接客户端
 		}
 	})
 
-	client.on('end', function () {
+	client.on('end', function () { // 断开连接
 		clientList.splice(clientList.indexOf(client), 1) // 删除用户
 	})
 	

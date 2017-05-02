@@ -1,7 +1,6 @@
 var http = require('http'),
 	fs = require('fs'),
 	url = require('url'),
-	util = require('util'),
 	querystring = require('querystring'), // 解析查询键值对
 	formidable = require('formidable') // 第三方组件： 文件上传
 
