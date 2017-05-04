@@ -1,0 +1,20 @@
+npm install babel-cli -g / npm install babel-cli --save-dev ES6转ES5
+(-dev 依赖 以后npm insstall 就能自动安装依赖了)
+npm init 初始化环境
+一切构建工具都要写配置， 如babel需要.babelrc,  preset:预设，要执行的标准， plugin:插件
+npm install --save-dev babel-preset-xxx // 安装预置的标准
+babel xx.js 控制台输出转化后的结果
+babel xx.js -o oo.js 单文件转换
+babel xx -d oo 批量转换文件夹下所有的js
+然而这些很麻烦，有热更新方法 watch
+babel --watch xx -d oo 只要你改变了文件就自动转换
+
+babel-node xx.js 直接在node 执行es6文件 
+npm install browser-sync --save-dev 下载热更新工具
+browser-sync start --server 启动一个本地服务器，无热更新
+每个指令都有--help
+browser-sync start --server -f xx/xx.js 监听某文件（所有文件）且热更新
+
+
+package.json 的 scripts 可以自定义指令 用 npm run xx 实行， 且自定义指令可以批量执行（详情见文件）
+然而--watch只能使用一次， build:watch能执行但build:sync无法执行
