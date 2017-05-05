@@ -1,0 +1,3 @@
+npm install browserify -g
+
+打包文件为 browserify xx.js > oo.js

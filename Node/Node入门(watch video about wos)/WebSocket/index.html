@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Socket Test</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
+</head>
+<body>
+	
+	<script type="text/javascript">
+		var socket = io.connect('http://localhost:3000')
+		socket.on('message', function (data) {
+			console.log(data)
+		})
+		socket.on('news', function (data) { // 接收自定义数据
+			console.log(data)
+			socket.emit('cute', 'Balabala...') // 自定义指令数据，传给服务器
+		})
+	</script>
+</body>
+</html>
