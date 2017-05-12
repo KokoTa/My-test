@@ -1,20 +1,77 @@
-npm install babel-cli -g / npm install babel-cli --save-dev ES6תES5
-(-dev ���� �Ժ�npm insstall �����Զ���װ������)
-npm init ��ʼ������
-һ�й������߶�Ҫд���ã� ��babel��Ҫ.babelrc,  preset:Ԥ�裬Ҫִ�еı�׼�� plugin:���
-npm install --save-dev babel-preset-xxx // ��װԤ�õı�׼
-babel xx.js ����̨���ת����Ľ��
-babel xx.js -o oo.js ���ļ�ת��
-babel xx -d oo ����ת���ļ��������е�js
-Ȼ����Щ���鷳�����ȸ��·��� watch
-babel --watch xx -d oo ֻҪ��ı����ļ����Զ�ת��
+﻿基础：
 
-babel-node xx.js ֱ����node ִ��es6�ļ� 
-npm install browser-sync --save-dev �����ȸ��¹���
-browser-sync start --server ����һ�����ط����������ȸ���
-ÿ��ָ���--help
-browser-sync start --server -f xx/xx.js ����ĳ�ļ��������ļ������ȸ���
+Babel: ES6转换器
+npm install babel-cli -g / npm install babel-cli --save-dev ES6转ES5
+(-dev 依赖 以后npm insstall 就能自动安装依赖了)
+npm init 初始化环境
+一切构建工具都要写配置， 如babel需要.babelrc,  preset:预设，要执行的标准， plugin:插件
+npm install --save-dev babel-preset-xxx // 安装预置的标准
+babel xx.js 控制台输出转化后的结果
+babel xx.js -o oo.js 单文件转换
+babel xx -d oo 批量转换文件夹下所有的js
+然而这些很麻烦，有热更新方法 watch
+babel --watch xx -d oo 只要你改变了文件就自动转换
+babel-node xx.js 直接在node 执行es6文件 
+
+browser-sync: 热更新工具
+npm install browser-sync --save-dev 下载热更新工具
+browser-sync start --server 启动一个本地服务器，无热更新
+每个指令都有--help
+browser-sync start --server -f xx/xx.js 监听某文件（所有文件）且热更新
+
+browserify: 压缩插件
+browserify xx.js > oo.js   JS压缩，xx.js是入口文件
+
+less: CSS预处理语言
+lessc 帮助
+lessc xx.less > oo.css   --clean-css='advanced' less转义并压缩,xx.less是入口文件
+npm i less less-plugin-clean-css less压缩插件
+
+uglifyjs: 压缩混淆插件
+npm i uglifyjs 
+uglifyjs xx.js -o oo.js 压缩
+uglifyjs xx.js -m -o oo.js 混淆并压缩
+
+node-smushit: 图片压缩插件
+smushit xx 大图压缩
+tinify: 付费压缩插件
+
+package.json:
+package.json 的 scripts 可以自定义指令 用 npm run xx 实行， 且自定义指令可以批量执行（详情见文件）
+然而--watch只能使用一次， build:watch能执行但build:sync无法执行
 
 
-package.json �� scripts �����Զ���ָ�� �� npm run xx ʵ�У� ���Զ���ָ���������ִ�У�������ļ���
-Ȼ��--watchֻ��ʹ��һ�Σ� build:watch��ִ�е�build:sync�޷�ִ��
+
+
+
+
+
+
+
+进阶：
+
+css-loader + style-loader + sass/less-loader: 转义合并CSS后插入页面
+后再webpack配置文件的 module 中配置 loaders 下的 test + loader
+
+json-loader: 对Json数据的支持, webpack2已集成
+
+extract-text-webpack-plugin: 单独提取文件
+它没有命令行工具， 需要在webpack中设置
+var x = require('extract-text-webpack-plugin')
+loaders配置添加
+{
+  test: '/\.css$/',
+  loader: x.extract('style-loader','css-loader')
+}
+plugins配置添加
+new x('index.css') // 提取输出到index.css中，存放在output的目录中
+若要改变输出路径，开头先定义 var o = new x(/../../[name].css) 指定输出位置
+后将loader中的x替换成o，并把plugin配置变为o就行了
+
+html-webpack-plugin: 页面生成插件
+webpack.optimize.UglifyJsPlugin: JS压缩插件(uglify-js)
+CommonChunkPlugin: 静态资源单独打包
+url-loader + file-loader:css图片处理
+html-loader:html图片路径处理
+
+
