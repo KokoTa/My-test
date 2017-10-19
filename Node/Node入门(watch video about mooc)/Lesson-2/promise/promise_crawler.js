@@ -30,7 +30,7 @@ videoIds.forEach(function(id){//每个id对应不同课程
 });
 Promise
 	.all(fetchCourseArray)//类似于foreach,处理Promise对象数组,即then中的回调作用于所有Promise对象
-	.then(function(pages){//pages对应一张网页，即一个Promise对象
+	.then(function(pages){//pages是Promise对象数组
 		var pagesData = [];
 
 		pages.forEach(function(html){

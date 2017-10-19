@@ -2,11 +2,11 @@
 var stream = require('stream');
 var util = require('util');
 ///////////////////////////
-function ReadStream(){//继承
-	stream.Readable.call(this);
+function ReadStream(){
+	stream.Readable.call(this);//继承自身属性
 }
 
-util.inherits(ReadStream,stream.Readable);//继承
+util.inherits(ReadStream,stream.Readable);//继承原型属性
 
 ReadStream.prototype._read = function(){
 	this.push('1');
