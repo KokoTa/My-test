@@ -3,7 +3,7 @@
   <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;workbench>&#xD;&#xA;&lt;mruList>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;BookManagerEasy.java&quot; tooltip=&quot;F:\Github\Program\My-test\Java\Study\src\imooc_exception_book\src\com\imooc\proj_1\BookManagerEasy.java&quot;>&#xD;&#xA;&lt;persistable uri=&quot;file:/F:/Github/Program/My-test/Java/Study/src/imooc_exception_book/src/com/imooc/proj_1/BookManagerEasy.java&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;/mruList>&#xD;&#xA;&lt;/workbench>"/>
   <tags>activeSchemeId:org.eclipse.ui.defaultAcceleratorConfiguration</tags>
   <tags>ModelMigrationProcessor.001</tags>
-  <children xsi:type="basic:TrimmedWindow" xmi:id="_q_NmAr1TEee6v46D0gerDw" elementId="IDEWindow" contributorURI="platform:/plugin/org.eclipse.platform" selectedElement="_sJWd4r1TEee6v46D0gerDw" label="%trimmedwindow.label.eclipseSDK" x="-7" y="0" width="974" height="1047">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_q_NmAr1TEee6v46D0gerDw" elementId="IDEWindow" contributorURI="platform:/plugin/org.eclipse.platform" selectedElement="_sJWd4r1TEee6v46D0gerDw" label="%trimmedwindow.label.eclipseSDK" x="110" y="50" width="974" height="1047">
     <persistedState key="coolBarVisible" value="true"/>
     <persistedState key="perspectiveBarVisible" value="true"/>
     <persistedState key="isRestored" value="true"/>
@@ -132,7 +132,7 @@
         <tags>org.eclipse.e4.primaryDataStack</tags>
         <tags>EditorStack</tags>
         <children xsi:type="basic:Part" xmi:id="_zsxMAL1TEee6v46D0gerDw" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="BookManagerEasy.java" iconURI="platform:/plugin/org.eclipse.jdt.ui/icons/full/obj16/jcu_obj.png" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;BookManagerEasy.java&quot; partName=&quot;BookManagerEasy.java&quot; title=&quot;BookManagerEasy.java&quot; tooltip=&quot;F:\Github\Program\My-test\Java\Study\src\imooc_exception_book\src\com\imooc\proj_1\BookManagerEasy.java&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; uri=&quot;file:/F:/Github/Program/My-test/Java/Study/src/imooc_exception_book/src/com/imooc/proj_1/BookManagerEasy.java&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;1031&quot; selectionTopPixel=&quot;814&quot;/>&#xD;&#xA;&lt;/editor>"/>
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;BookManagerEasy.java&quot; partName=&quot;BookManagerEasy.java&quot; title=&quot;BookManagerEasy.java&quot; tooltip=&quot;F:\Github\Program\My-test\Java\Study\src\imooc_exception_book\src\com\imooc\proj_1\BookManagerEasy.java&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.ide.FileStoreEditorInputFactory&quot; uri=&quot;file:/F:/Github/Program/My-test/Java/Study/src/imooc_exception_book/src/com/imooc/proj_1/BookManagerEasy.java&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;1031&quot; selectionTopPixel=&quot;0&quot;/>&#xD;&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>org.eclipse.jdt.ui.CompilationUnitEditor</tags>
           <tags>removeOnHide</tags>
@@ -240,7 +240,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_s0-00L1TEee6v46D0gerDw" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_s1P6kL1TEee6v46D0gerDw" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" enabled="false" command="_rDTb0r1TEee6v46D0gerDw"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_le4McMg0EeeR4ZkGZSfg1Q" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_rDTb0r1TEee6v46D0gerDw"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_s0-00b1TEee6v46D0gerDw" elementId="additions" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -270,7 +270,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_s0_b4L1TEee6v46D0gerDw" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_s1SW0L1TEee6v46D0gerDw" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_rDSN4L1TEee6v46D0gerDw"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_le6BoMg0EeeR4ZkGZSfg1Q" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_rDSN4L1TEee6v46D0gerDw"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_s0_b4b1TEee6v46D0gerDw" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>

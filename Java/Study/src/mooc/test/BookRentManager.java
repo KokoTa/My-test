@@ -2,6 +2,7 @@ package mooc.test;
 
 import java.util.Scanner;
 
+// 课程1-4
 public class BookRentManager {
     private static Scanner console = new Scanner(System.in);
 
