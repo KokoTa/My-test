@@ -13,7 +13,7 @@ print('''Hello
 	Hello
 	Hello''');
 print(10 / 3);
-print(10 // 3);
+print(10 // 3); # 地板除，只取整数
 print(ord('A'));
 print(chr(65));
 print('\u4e2d\u6587');

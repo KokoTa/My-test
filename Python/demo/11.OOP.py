@@ -17,7 +17,7 @@ bart = Student('KokoTa', 100)
 bart.printScore()
 bart.other = 'Greeting'
 print(bart.other)
-print(bart._Student__name)
+print(bart._Student__name) # 强制访问，不推荐
 
 print(Student.grade)
 print(bart.grade)
@@ -44,7 +44,7 @@ print(isinstance((1, 2, 3), (list, tuple)))
 
 # dir()获得对象属性和方法
 # 可使用getattr(obj, attr, default)、setattr()、hasattr()操作对象状态
-# print(dir('ABC'))
+print(dir('ABC'))
 
 # __slots__限制实例属性
 # 作用范围仅对当前类的实例，对继承的子类不起作用
@@ -94,7 +94,7 @@ class Chain(object):
   def __init__(self, path=''):
     self._path = path
 
-  def __getattr__(self, path):
+  def __getattr__(self, path): # self指向类属性
     return Chain('%s/%s' % (self._path, path))
 
   def __call__(self, name):
@@ -104,7 +104,7 @@ class Chain(object):
   def __str__(self):
     return self._path
 
-  __repr__ = __str__
+  __repr__ = __str__ # 区别看文章
 
 # 解析：
 # 一开始调用Chain()，本应该调用__str__，但是后面我们访问了status这个属性

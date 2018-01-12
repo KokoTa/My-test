@@ -88,7 +88,8 @@ print(u.__getattr__)
 print(u.__setattr__)
 
 # 总结：
-# User首先继承了Model，而Model受ModelMetaclass约束，因此User也被约束了
+# User首先继承了Model，而Model受ModelMetaclass约束，因此User也同理被约束了
 # 此例中User先定义了一堆变量，然后变量经过ModelMetaclass洗礼后被删除，最后实例化User
 # 由于User继承了Model，实例化过程都遵循Model的方法来做
-# 然后就如你所见了0 0
+# 然后就如你所见了0 0，即先执行User中的Interger等类初始化后，跳转到Metaclass接收操作，再完成Model类的继承，然后再调用Model的方法
+# 也就是这条继承链上创建类时都会经过Metaclass洗礼，User需要Metaclass洗礼，Model也需要Metaclass洗礼
