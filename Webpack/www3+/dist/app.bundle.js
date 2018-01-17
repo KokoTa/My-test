@@ -1,0 +1,2 @@
+webpackJsonp([0],[,function(e,n,o){"use strict";Object.defineProperty(n,"__esModule",{value:!0});var t=o(0),c=(o.n(t),o(4));document.body.appendChild(function(){let e=document.createElement("pre");return e.innerHTML=["Hello webpack",Object(c.a)(5)].join("\n\n"),e}()),console.log("Look!your mother fucker!")},,,function(e,n,o){"use strict";n.a=function(e){return e*e*e}}],[1]);
+//# sourceMappingURL=app.bundle.js.map
