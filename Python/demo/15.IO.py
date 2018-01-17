@@ -3,88 +3,88 @@
 # 此IO章节都是同步读取
 
 
-# # 读取文本文件
-# # r:读取文件,w:重新写入文件；with语法可以省去关闭文件的步骤；encoding指定读取时的字符编码，默认为utf-8
-# with open('F:/Github/Program/My-test/Python/demo/test.txt', 'r', encoding='gbk') as f: 
-#     print(f.read()) # 一次性全读取
+# 读取文本文件
+# r:读取文件,w:重新写入文件；with语法可以省去关闭文件的步骤；encoding指定读取时的字符编码，默认为utf-8
+with open('F:/Github/Program/My-test/Python/demo/test.txt', 'r', encoding='gbk') as f: 
+    print(f.read()) # 一次性全读取
 
-# with open('F:/Github/Program/My-test/Python/demo/test.txt', 'r') as f:
-#     for line in f.readlines(): # 读取所有内容并按行返回
-#         print(line.strip()) # 把末尾的'\n'删掉
+with open('F:/Github/Program/My-test/Python/demo/test.txt', 'r') as f:
+    for line in f.readlines(): # 读取所有内容并按行返回
+        print(line.strip()) # 把末尾的'\n'删掉
 
-# # 读取二进制文件（图片）
-# # rb:读取二进制文件，rb：重新写入二进制文件
-# with open('F:/Github/Program/My-test/Python/demo/test.jpg', 'rb') as f:
-#     print(f.read())
+# 读取二进制文件（图片）
+# rb:读取二进制文件，rb：重新写入二进制文件
+with open('F:/Github/Program/My-test/Python/demo/test.jpg', 'rb') as f:
+    print(f.read())
 
-# # 写入文本文件
-# # a:追加写入
-# with open('F:/Github/Program/My-test/Python/demo/test.txt', 'a', encoding='gbk') as f:
-#     f.write('Yohoooo~')
-
-
-
-# # 内存读写->StringIO，只能操作str
-# from io import StringIO
-
-# f = StringIO()
-# f.write('hello')
-# print(f.getvalue())
-
-# f = StringIO('OK!\nYeah!')
-# while True:
-#     s = f.readline()
-#     if s == '':
-#         break
-#     print(s.strip())
-
-# #  BytesIO->操作二进制
-# from io import BytesIO
-
-# f = BytesIO()
-# f.write('中文'.encode('utf-8'))
-# print(f.getvalue())
-
-# f = BytesIO(b'\xe4\xb8\xad\xe6\x96\x87')
-# print(f.read())
+# 写入文本文件
+# a:追加写入
+with open('F:/Github/Program/My-test/Python/demo/test.txt', 'a', encoding='gbk') as f:
+    f.write('Yohoooo~')
 
 
 
-# # 详细路径的操作
-# # https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431925324119bac1bc7979664b4fa9843c0e5fcdcf1e000
-# # os.path.abspath('.') # 当前目录的绝对路径
-# # os.path.join(xx, oo) # 连接路径
-# # os.mkdir(xx) # 创建文件夹
-# # os.rmdir(xx) # 删除文件夹
-# # os.path.split(xx) # 拆分路径为两部分，后一部分为最后级别目录或文件
-# # os.path.splitext(xx) # 同上，后一部分是文件后缀
-# # os.listdir(xx) # 某文件夹下的所有目录和文件
-# # os.path.isdir(xx) # 是否是文件夹
-# # os.path.isfile(xx) # 是否是文件
-# # os.getcwd() # 获得执行时的绝对路径
+# 内存读写->StringIO，只能操作str
+from io import StringIO
+
+f = StringIO()
+f.write('hello')
+print(f.getvalue())
+
+f = StringIO('OK!\nYeah!')
+while True:
+    s = f.readline()
+    if s == '':
+        break
+    print(s.strip())
+
+#  BytesIO->操作二进制
+from io import BytesIO
+
+f = BytesIO()
+f.write('中文'.encode('utf-8'))
+print(f.getvalue())
+
+f = BytesIO(b'\xe4\xb8\xad\xe6\x96\x87')
+print(f.read())
 
 
-# # 列出当前目录下的所有目录/.py文件
-# import os
 
-# print([x for x in os.listdir('.') if os.path.isdir(x)])
-# print([x for x in os.listdir('.') if os.path.isfile(x) and os.path.splitext(x)[1] == '.py'])
+# 详细路径的操作
+# https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431925324119bac1bc7979664b4fa9843c0e5fcdcf1e000
+# os.path.abspath('.') # 当前目录的绝对路径
+# os.path.join(xx, oo) # 连接路径
+# os.mkdir(xx) # 创建文件夹
+# os.rmdir(xx) # 删除文件夹
+# os.path.split(xx) # 拆分路径为两部分，后一部分为最后级别目录或文件
+# os.path.splitext(xx) # 同上，后一部分是文件后缀
+# os.listdir(xx) # 某文件夹下的所有目录和文件
+# os.path.isdir(xx) # 是否是文件夹
+# os.path.isfile(xx) # 是否是文件
+# os.getcwd() # 获得执行时的绝对路径
 
-# # 实现 dir -l xx -> 找出xx文件夹下的目录和文件
-# print([x for x in os.listdir('.')])
 
-# # 实现在当前目录以及当前目录的所有子目录下查找文件名包含指定字符串的文件，并打印出绝对路径。
-# def searchFile(path, name):
-#     for x in os.listdir(path):
-#         if os.path.isdir(x):
-#             nPath = os.path.join(path, x)
-#             searchFile(nPath, name)
-#         else:
-#             if name in x:
-#                 print(path, x)
-#     return 0
+# 列出当前目录下的所有目录/.py文件
+import os
 
-# searchFile(os.getcwd(), 'test.txt')
+print([x for x in os.listdir('.') if os.path.isdir(x)])
+print([x for x in os.listdir('.') if os.path.isfile(x) and os.path.splitext(x)[1] == '.py'])
+
+# 实现 dir -l xx -> 找出xx文件夹下的目录和文件
+print([x for x in os.listdir('.')])
+
+# 实现在当前目录以及当前目录的所有子目录下查找文件名包含指定字符串的文件，并打印出绝对路径。
+def searchFile(path, name):
+    for x in os.listdir(path):
+        if os.path.isdir(x):
+            nPath = os.path.join(path, x)
+            searchFile(nPath, name)
+        else:
+            if name in x:
+                print(path, x)
+    return 0
+
+searchFile(os.getcwd(), 'test.txt')
 
 
 
