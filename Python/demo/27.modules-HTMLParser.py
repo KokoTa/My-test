@@ -32,7 +32,7 @@ parser = MyHTMLParser()
 
 # URL = 'http://www.baidu.com'
 # with request.urlopen(URL, timeout=4) as f:
-# 	data = f.read().decode('utf-8')
+# 	data = f.read().decode('utf-8') # read得到的是bytes类型，解析需要str类型
 # parser.feed(data)
 
 parser.feed('''<html>
